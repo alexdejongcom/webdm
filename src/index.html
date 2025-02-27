@@ -1,17 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>Vanilla JavaScript App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dunder Mifflin Paper Company</title>
+  <style>
+    /* Reset and base styles */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      color: #333;
+      line-height: 1.6;
+    }
+    header {
+      background: #336699;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+    }
+    nav {
+      background: #25476a;
+      text-align: center;
+      padding: 10px 0;
+    }
+    nav a {
+      color: #fff;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+    section {
+      margin-bottom: 40px;
+    }
+    h1, h2 {
+      font-family: Georgia, serif;
+      margin-bottom: 10px;
+    }
+    p {
+      margin-bottom: 15px;
+    }
+    /* Employee cards styling */
+    .employee-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+    .employee-card {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin: 10px;
+      border-radius: 5px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+      flex: 1 1 250px;
+      max-width: 300px;
+    }
+    .employee-card h3 {
+      margin-top: 0;
+      color: #336699;
+    }
+    .employee-card p {
+      font-style: italic;
+      color: #555;
+    }
+    /* Season cards styling */
+    .season-container {
+      display: flex;
+      flex-direction: column;
+    }
+    .season-card {
+      background: #fff;
+      border: 1px solid #ddd;
+      margin: 10px 0;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+    }
+    .season-card h3 {
+      margin-top: 0;
+      color: #336699;
+    }
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      nav a {
+        display: block;
+        margin: 10px 0;
+      }
+    }
+  </style>
 </head>
-
 <body>
-  <main>
-    <h1>Vanilla JavaScript App</h1>
-  </main>
+  <header>
+    <h1>Dunder Mifflin Paper Company</h1>
+    <p>Where Paper Meets Passion!</p>
+  </header>
+  
+  <nav>
+    <a href="#about">About Us</a>
+    <a href="#employees">Employees</a>
+    <a href="#seasons">Seasons</a>
+  </nav>
+  
+  <div class="container">
+    <!-- About Section -->
+    <section id="about">
+      <h2>About Dunder Mifflin</h2>
+      <p>
+        Dunder Mifflin is a proud, independent paper company that has become synonymous with exceptional service and a unique office culture. Founded in Scranton, Pennsylvania, our flagship branch is renowned for its tight-knit community and quirky charm. Over the years, our commitment to quality and innovation has fueled a steady expansion across the Northeastern United States.
+      </p>
+      <p>
+        Our journey began in Scranton, where the blend of humor and hard work set the tone for everything we do. We soon expanded to include branch offices in Stamford, Utica, and Nashua, each contributing its own distinct flair and dedicated team spirit. Whether it’s the competitive edge of the Stamford office, the creative buzz in Utica, or the resilient energy in Nashua, every branch upholds the legacy of excellence that Dunder Mifflin represents.
+      </p>
+      <p>
+        Today, Dunder Mifflin stands as a testament to the power of community and the art of paper. With a rich history chronicled in the acclaimed TV show <em>The Office</em>, our company continues to thrive by embracing change, nurturing talent, and keeping the spirit of camaraderie alive in every branch office.
+      </p>
+    </section>
+    
+    <!-- Employees Section -->
+    <section id="employees">
+      <h2>Meet Our Employees</h2>
+      <div class="employee-container">
+        <div class="employee-card">
+          <h3>Michael Scott</h3>
+          <p>"That's what she said."</p>
+        </div>
+        <div class="employee-card">
+          <h3>Dwight Schrute</h3>
+          <p>"Identity theft is not a joke, Jim!"</p>
+        </div>
+        <div class="employee-card">
+          <h3>Jim Halpert</h3>
+          <p>"Bears, beets, Battlestar Galactica."</p>
+        </div>
+        <div class="employee-card">
+          <h3>Pam Beesly</h3>
+          <p>"There’s a lot of beauty in ordinary things. Isn’t that kind of the point?"</p>
+        </div>
+        <div class="employee-card">
+          <h3>Andy Bernard</h3>
+          <p>"I wish there was a way to know you’re in the good old days before you’ve actually left them."</p>
+        </div>
+        <div class="employee-card">
+          <h3>Ryan Howard</h3>
+          <p>"I hate inside jokes. I'd love to be a part of one someday."</p>
+        </div>
+        <div class="employee-card">
+          <h3>Kelly Kapoor</h3>
+          <p>"I talk a lot, so I've learned to just tune myself out."</p>
+        </div>
+        <div class="employee-card">
+          <h3>Angela Martin</h3>
+          <p>"I don't have time for nonsense."</p>
+        </div>
+        <div class="employee-card">
+          <h3>Oscar Martinez</h3>
+          <p>"Sometimes I feel like I'm the only one who sees how absurd everything is."</p>
+        </div>
+        <div class="employee-card">
+          <h3>Kevin Malone</h3>
+          <p>"I just want to do my job and eat my famous chili."</p>
+        </div>
+        <div class="employee-card">
+          <h3>Stanley Hudson</h3>
+          <p>"Did I stutter?"</p>
+        </div>
+        <div class="employee-card">
+          <h3>Phyllis Vance</h3>
+          <p>"I enjoy the simple things in life."</p>
+        </div>
+        <div class="employee-card">
+          <h3>Meredith Palmer</h3>
+          <p>"Sometimes I surprise even myself."</p>
+        </div>
+        <div class="employee-card">
+          <h3>Creed Bratton</h3>
+          <p>"The only difference between me and a homeless person is this job."</p>
+        </div>
+        <div class="employee-card">
+          <h3>Toby Flenderson</h3>
+          <p>"I feel like I'm invisible."</p>
+        </div>
+        <div class="employee-card">
+          <h3>Erin Hannon</h3>
+          <p>"I just want to make everyone smile."</p>
+        </div>
+        <div class="employee-card">
+          <h3>Darryl Philbin</h3>
+          <p>"I keep it real and do things my way."</p>
+        </div>
+        <div class="employee-card">
+          <h3>Jan Levinson</h3>
+          <p>"Sometimes, tough decisions are necessary."</p>
+        </div>
+        <div class="employee-card">
+          <h3>Gabe Lewis</h3>
+          <p>"I am not as awkward as I seem."</p>
+        </div>
+        <div class="employee-card">
+          <h3>Robert California</h3>
+          <p>"I'm the boss now."</p>
+        </div>
+        <div class="employee-card">
+          <h3>Nellie Bertram</h3>
+          <p>"I am a force to be reckoned with."</p>
+        </div>
+        <div class="employee-card">
+          <h3>David Wallace</h3>
+          <p>"I believe in the power of small victories."</p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Seasons Section -->
+    <section id="seasons">
+      <h2>The Journey Through the Seasons</h2>
+      <div class="season-container">
+        <div class="season-card">
+          <h3>Season 1</h3>
+          <p>
+            Season 1 introduces viewers to the everyday workings of the Scranton branch of Dunder Mifflin. In this brief yet memorable season, we meet Michael Scott, Dwight Schrute, Jim Halpert, and Pam Beesly, as the show employs a mockumentary style to capture the quirky rhythms of office life. The humor is understated and rooted in the mundanity of daily tasks, setting the stage for evolving relationships and the idiosyncratic charm that defines our company.
+          </p>
+        </div>
+        <div class="season-card">
+          <h3>Season 2</h3>
+          <p>
+            Season 2 deepens character development and sharpens the series’ blend of humor and heart. Iconic moments like The Dundies highlight Michael’s misguided attempts at leadership and humor, while Jim’s quiet longing for Pam adds a layer of bittersweet tension. This season builds on the foundation laid in Season 1, exploring interpersonal relationships and the complexities of office politics with both laughter and touching sincerity.
+          </p>
+        </div>
+        <div class="season-card">
+          <h3>Season 3</h3>
+          <p>
+            In Season 3, the merger with the Stamford branch injects new energy and conflict into the Scranton office. New faces challenge the established order, igniting rivalries and sparking fresh alliances. As characters navigate cultural clashes and evolving relationships, the series masterfully balances the absurdities of corporate life with moments of genuine connection, setting the stage for even more dramatic and humorous developments.
+          </p>
+        </div>
+        <div class="season-card">
+          <h3>Season 4</h3>
+          <p>
+            Season 4 turns up the heat on both personal and professional challenges. With episodes like "Dinner Party" exposing the raw, often painful humor behind the characters’ relationships, the season explores themes of ambition, love, and vulnerability. Michael’s leadership is tested as personal crises unfold, making this a pivotal season where the absurdity of office life meets the stark realities of human emotion.
+          </p>
+        </div>
+        <div class="season-card">
+          <h3>Season 5</h3>
+          <p>
+            Season 5 sees the stakes rise as corporate pressures and personal dramas collide. Michael Scott’s unorthodox management is pushed to its limits, while Jim and Pam’s evolving relationship encounters new hurdles and joys. The season features a series of memorable episodes that balance outrageous humor with heartfelt introspection, illustrating how the characters grow and adapt amid constant change.
+          </p>
+        </div>
+        <div class="season-card">
+          <h3>Season 6</h3>
+          <p>
+            Marked by significant milestones, Season 6 is a season of transformation. Jim and Pam’s wedding brings a wave of emotional depth, while the brief adventure of the Michael Scott Paper Company adds unexpected twists to the narrative. This season interweaves laughter with poignant moments, as characters confront personal growth and evolving office dynamics.
+          </p>
+        </div>
+        <div class="season-card">
+          <h3>Season 7</h3>
+          <p>
+            Season 7 is an emotional rollercoaster that begins to prepare the audience for an impending farewell. With Michael Scott on the brink of departure, the office is filled with bittersweet humor and reflective nostalgia. His final pranks, heartfelt goodbyes, and the scramble to find new leadership create a season rich in character development, capturing the essence of what makes Dunder Mifflin so unforgettable.
+          </p>
+        </div>
+        <div class="season-card">
+          <h3>Season 8</h3>
+          <p>
+            In Season 8, the void left by Michael’s absence forces the office to reinvent itself. New leadership emerges and fresh challenges arise, as characters redefine their roles in a rapidly changing environment. While the humor persists, this season explores themes of adaptation, resilience, and the complexities of group dynamics, ensuring that the spirit of Dunder Mifflin endures despite the shifting landscape.
+          </p>
+        </div>
+        <div class="season-card">
+          <h3>Season 9</h3>
+          <p>
+            The final season, Season 9, offers a reflective and heartfelt conclusion to the journey of Dunder Mifflin. As the documentary airs, the characters face their past and contemplate their futures with a mix of humor and melancholy. Relationships are reassessed, personal dreams are revisited, and the legacy of the Scranton branch is celebrated in a series finale that poignantly ties together the threads of the entire series.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
 </body>
-
 </html>
