@@ -159,4 +159,133 @@ document.addEventListener('DOMContentLoaded', () => {
   style.textContent = `.form-control.error-border{border-color:#b91c1c!important;box-shadow:0 0 0 3px rgba(185,28,28,.1)!important}`;
   document.head.appendChild(style);
 
+  // ── "That's What She Said" floating button ────────────────────
+  const twssStyles = document.createElement('style');
+  twssStyles.textContent = `
+    #twss-btn {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 9999;
+      background: var(--navy, #1b3a6b);
+      color: #fff;
+      border: none;
+      border-radius: 99px;
+      padding: 10px 18px;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,.25);
+      transition: background .2s, transform .15s;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    #twss-btn:hover { background: #c9a227; transform: scale(1.06); }
+    #twss-popup {
+      position: fixed;
+      bottom: 80px;
+      right: 28px;
+      z-index: 9998;
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity .3s, transform .3s;
+    }
+    #twss-popup.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    #twss-bubble {
+      background: var(--white, #fff);
+      border: 2px solid var(--navy, #1b3a6b);
+      border-radius: 16px 16px 4px 16px;
+      padding: 14px 18px;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy-dark, #0f2444);
+      max-width: 220px;
+      text-align: center;
+      box-shadow: 0 6px 24px rgba(0,0,0,.15);
+      line-height: 1.4;
+    }
+    #twss-bubble small {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #c9a227;
+      margin-top: 6px;
+    }
+    #twss-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: top center;
+      border: 3px solid var(--navy, #1b3a6b);
+      box-shadow: 0 4px 12px rgba(0,0,0,.2);
+      flex-shrink: 0;
+    }
+  `;
+  document.head.appendChild(twssStyles);
+
+  const twssBtn = document.createElement('button');
+  twssBtn.id = 'twss-btn';
+  twssBtn.innerHTML = '😏 TWSS';
+  twssBtn.title = "That's What She Said";
+  document.body.appendChild(twssBtn);
+
+  const twssPopup = document.createElement('div');
+  twssPopup.id = 'twss-popup';
+  twssPopup.innerHTML = `
+    <div id="twss-bubble">
+      "That's what she said."
+      <small>— Michael Scott</small>
+    </div>
+    <img id="twss-avatar" src="https://www.thatswhatwhosaid.com/images/characters/michael.webp" alt="Michael Scott">
+  `;
+  document.body.appendChild(twssPopup);
+
+  let twssTimer;
+  twssBtn.addEventListener('click', () => {
+    twssPopup.classList.add('visible');
+    clearTimeout(twssTimer);
+    twssTimer = setTimeout(() => twssPopup.classList.remove('visible'), 3200);
+  });
+
+  // ── Paper plane animation on load ─────────────────────────────
+  const planeStyles = document.createElement('style');
+  planeStyles.textContent = `
+    #paper-plane {
+      position: fixed;
+      top: 18vh;
+      left: -120px;
+      z-index: 99999;
+      pointer-events: none;
+      animation: planeFly 2.8s cubic-bezier(.4,0,.2,1) forwards;
+      font-size: 3rem;
+      filter: drop-shadow(2px 4px 8px rgba(0,0,0,.18));
+    }
+    @keyframes planeFly {
+      0%   { left: -120px; top: 18vh; transform: rotate(-8deg) scale(.8); opacity: 0; }
+      10%  { opacity: 1; }
+      50%  { top: 28vh; transform: rotate(4deg) scale(1); }
+      80%  { opacity: 1; }
+      100% { left: calc(100vw + 120px); top: 12vh; transform: rotate(-6deg) scale(.85); opacity: 0; }
+    }
+  `;
+  document.head.appendChild(planeStyles);
+
+  const plane = document.createElement('div');
+  plane.id = 'paper-plane';
+  plane.textContent = '✈️';
+  document.body.appendChild(plane);
+  setTimeout(() => { if (plane.parentNode) plane.parentNode.removeChild(plane); }, 3200);
+
 });

@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dunder Mifflin Infinity — Online Ordering Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #1b3a6b;
+      --navy-dark: #0f2444;
+      --gold: #c9a227;
+      --white: #ffffff;
+      --bg: #f0f4f8;
+      --border: #dce3ed;
+      --text: #1e293b;
+      --text-muted: #64748b;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Top bar ── */
+    .infinity-topbar {
+      background: var(--navy-dark);
+      padding: 8px 0;
+      text-align: center;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ── Header ── */
+    .infinity-header {
+      background: var(--navy);
+      padding: 0;
+    }
+    .infinity-header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .infinity-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .infinity-logo-text {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: .02em;
+    }
+    .infinity-logo-text span { color: var(--gold); }
+    .infinity-logo-badge {
+      background: var(--gold);
+      color: var(--white);
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 99px;
+    }
+    .infinity-nav { display: flex; align-items: center; gap: 8px; }
+    .infinity-nav a {
+      color: rgba(255,255,255,.7);
+      text-decoration: none;
+      font-size: .82rem;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 4px;
+      transition: color .2s, background .2s;
+    }
+    .infinity-nav a:hover { color: var(--white); background: rgba(255,255,255,.1); }
+
+    /* ── Hero login card ── */
+    .infinity-hero {
+      background: linear-gradient(135deg, var(--navy-dark) 0%, #1a3860 50%, #0d4c6b 100%);
+      padding: 72px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: calc(100vh - 96px);
+      position: relative;
+      overflow: hidden;
+    }
+    .infinity-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent, transparent 40px,
+        rgba(255,255,255,.015) 40px, rgba(255,255,255,.015) 41px
+      );
+    }
+    .infinity-card {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.35);
+      width: 100%;
+      max-width: 440px;
+      padding: 0;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+    .infinity-card-top {
+      background: linear-gradient(135deg, var(--navy-dark), var(--navy));
+      padding: 32px 36px 28px;
+      text-align: center;
+    }
+    .infinity-card-logo {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .infinity-card-logo span { color: var(--gold); }
+    .infinity-card-sub {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.5);
+      margin-bottom: 20px;
+    }
+    .infinity-card-tagline {
+      background: rgba(201,162,39,.15);
+      border: 1px solid rgba(201,162,39,.3);
+      border-radius: 6px;
+      padding: 10px 16px;
+      font-size: .82rem;
+      color: #e8c84a;
+      font-style: italic;
+      line-height: 1.5;
+    }
+    .infinity-card-body { padding: 32px 36px 36px; }
+    .infinity-card-body h2 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.25rem;
+      color: var(--navy-dark);
+      margin-bottom: 6px;
+    }
+    .infinity-card-body .subtitle {
+      font-size: .82rem;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: var(--navy-dark);
+      margin-bottom: 6px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      font-size: .92rem;
+      font-family: inherit;
+      color: var(--text);
+      background: #f8fafc;
+      transition: border-color .2s, box-shadow .2s;
+      outline: none;
+    }
+    .form-group input:focus {
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(27,58,107,.1);
+      background: var(--white);
+    }
+    .infinity-login-btn {
+      width: 100%;
+      padding: 13px;
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      font-size: .92rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      transition: background .2s, transform .15s;
+      margin-top: 8px;
+    }
+    .infinity-login-btn:hover { background: var(--gold); transform: translateY(-1px); }
+    .infinity-divider {
+      text-align: center;
+      margin: 20px 0;
+      position: relative;
+      color: var(--text-muted);
+      font-size: .75rem;
+    }
+    .infinity-divider::before, .infinity-divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 42%;
+      height: 1px;
+      background: var(--border);
+    }
+    .infinity-divider::before { left: 0; }
+    .infinity-divider::after { right: 0; }
+    .infinity-new-account {
+      text-align: center;
+      font-size: .82rem;
+      color: var(--text-muted);
+    }
+    .infinity-new-account a { color: var(--navy); font-weight: 600; text-decoration: none; }
+    .infinity-new-account a:hover { text-decoration: underline; }
+
+    /* ── Notice box ── */
+    .infinity-notice {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: .78rem;
+      color: #92400e;
+      margin-bottom: 20px;
+      line-height: 1.55;
+    }
+    .infinity-notice strong { color: #7c2d12; }
+
+    /* ── Features row below card ── */
+    .infinity-features {
+      max-width: 1100px;
+      margin: 48px auto 0;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .infinity-feature {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 8px;
+      padding: 22px 24px;
+      color: rgba(255,255,255,.85);
+    }
+    .infinity-feature-icon { font-size: 1.8rem; margin-bottom: 10px; }
+    .infinity-feature h3 { font-size: .92rem; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+    .infinity-feature p { font-size: .8rem; color: rgba(255,255,255,.55); line-height: 1.6; }
+
+    /* ── Alert modal ── */
+    #infinity-modal {
+      display: none;
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,.6);
+      align-items: center;
+      justify-content: center;
+    }
+    #infinity-modal.show { display: flex; }
+    .modal-box {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 36px 40px;
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 24px 64px rgba(0,0,0,.35);
+      animation: popIn .25s ease;
+    }
+    @keyframes popIn {
+      from { transform: scale(.88); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+    .modal-box .modal-icon { font-size: 3rem; margin-bottom: 14px; }
+    .modal-box h3 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.4rem;
+      color: var(--navy-dark);
+      margin-bottom: 10px;
+    }
+    .modal-box p { font-size: .88rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 16px; }
+    .modal-box .modal-quote {
+      background: var(--bg);
+      border-left: 3px solid var(--gold);
+      border-radius: 0 6px 6px 0;
+      padding: 12px 16px;
+      font-style: italic;
+      font-size: .84rem;
+      color: var(--navy-dark);
+      margin-bottom: 24px;
+      text-align: left;
+    }
+    .modal-box .modal-quote small {
+      display: block;
+      font-style: normal;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+    .modal-close {
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      padding: 11px 28px;
+      border-radius: 6px;
+      font-size: .88rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      transition: background .2s;
+    }
+    .modal-close:hover { background: var(--gold); }
+
+    .infinity-footer {
+      background: var(--navy-dark);
+      text-align: center;
+      padding: 20px;
+      font-size: .72rem;
+      color: rgba(255,255,255,.35);
+      letter-spacing: .04em;
+      margin-top: 64px;
+    }
+    .infinity-footer a { color: rgba(255,255,255,.45); text-decoration: none; }
+    .infinity-footer a:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+<div class="infinity-topbar">🌐 Dunder Mifflin Infinity — Next-Day Delivery · 1,000+ Business Clients · Zero Viruses (This Month)</div>
+
+<header class="infinity-header">
+  <div class="infinity-header-inner">
+    <a href="index.html" class="infinity-logo">
+      <div>
+        <div class="infinity-logo-text">DUNDER MIFFLIN <span>∞</span> <span style="font-size:.9rem;color:rgba(255,255,255,.7);">Infinity</span></div>
+      </div>
+      <span class="infinity-logo-badge">Beta</span>
+    </a>
+    <nav class="infinity-nav">
+      <a href="products.html">Products</a>
+      <a href="team.html">Our Team</a>
+      <a href="dundies.html">🏆 Dundies</a>
+      <a href="contact.html">Support</a>
+      <a href="index.html">Back to Main Site</a>
+    </nav>
+  </div>
+</header>
+
+<div class="infinity-hero">
+  <div style="width:100%;max-width:1100px;margin:0 auto;display:flex;flex-direction:column;align-items:center;">
+
+    <div class="infinity-card">
+      <div class="infinity-card-top">
+        <div class="infinity-card-logo">DUNDER MIFFLIN <span>∞</span></div>
+        <div class="infinity-card-sub">Infinity Online Portal</div>
+        <div class="infinity-card-tagline">
+          "We take your paper needs and put them on the internet.<br>Which is where all the cool stuff is now." — M. Scott
+        </div>
+      </div>
+      <div class="infinity-card-body">
+        <h2>Sign in to your account</h2>
+        <p class="subtitle">Manage orders, track deliveries, and access your complete purchase history.</p>
+
+        <div class="infinity-notice">
+          <strong>⚠️ Maintenance Notice:</strong> If you registered between March 14–21, 2025, please re-register. We had a small virus situation. It has been resolved. Ryan Howard no longer works in IT.
+        </div>
+
+        <form onsubmit="showInfinityModal(event)">
+          <div class="form-group">
+            <label for="inf-email">Business Email</label>
+            <input id="inf-email" type="email" placeholder="you@yourcompany.com" required>
+          </div>
+          <div class="form-group">
+            <label for="inf-pass">Password</label>
+            <input id="inf-pass" type="password" placeholder="••••••••" required>
+          </div>
+          <button class="infinity-login-btn" type="submit">Sign In to Infinity</button>
+        </form>
+
+        <div class="infinity-divider">or</div>
+
+        <div class="infinity-new-account">
+          New client? <a href="contact.html">Request an account</a> &nbsp;·&nbsp; <a href="contact.html">Forgot password?</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="infinity-features">
+      <div class="infinity-feature">
+        <div class="infinity-feature-icon">📦</div>
+        <h3>Real-Time Order Tracking</h3>
+        <p>Track your delivery from our Scranton warehouse to your door. Darryl personally reviews dispatch.</p>
+      </div>
+      <div class="infinity-feature">
+        <div class="infinity-feature-icon">🔄</div>
+        <h3>Standing Orders</h3>
+        <p>Set it and forget it. Recurring deliveries arrive on your schedule without a single phone call.</p>
+      </div>
+      <div class="infinity-feature">
+        <div class="infinity-feature-icon">🧾</div>
+        <h3>Full Purchase History</h3>
+        <p>Every invoice, every delivery, all in one place. Angela from accounting approves of this feature.</p>
+      </div>
+      <div class="infinity-feature">
+        <div class="infinity-feature-icon">💬</div>
+        <h3>Direct Rep Access</h3>
+        <p>Message your named sales rep directly. Response time: under 2 hours (Jim: under 4, but the quality is worth it).</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="infinity-footer">
+  &copy; 2025 Dunder Mifflin, Inc. &nbsp;·&nbsp;
+  <a href="index.html">Main Website</a> &nbsp;·&nbsp;
+  <a href="contact.html">Support</a> &nbsp;·&nbsp;
+  Infinity Platform v2.4.1 &nbsp;·&nbsp;
+  Designed by Ryan Howard &nbsp;·&nbsp;
+  <span style="color:rgba(255,255,255,.2);">No endorsement by Michael Scott was solicited. One was given anyway.</span>
+</div>
+
+<!-- Modal -->
+<div id="infinity-modal">
+  <div class="modal-box">
+    <div class="modal-icon">🌐</div>
+    <h3>Welcome to Infinity!</h3>
+    <p>Your login was received. Our system is processing your request.<br>Expected wait time: approximately one business day.</p>
+    <div class="modal-quote">
+      <small>Michael Scott — Regional Manager</small>
+      "You are now part of something bigger than paper. You are part of the future. And the future — is Infinity."
+    </div>
+    <p style="font-size:.76rem;color:#94a3b8;">If you experience any issues, please call (570) 555-0147 and ask for Pam. Not Toby. Not Ryan. Pam.</p>
+    <br>
+    <button class="modal-close" onclick="document.getElementById('infinity-modal').classList.remove('show')">Got It</button>
+  </div>
+</div>
+
+<script>
+function showInfinityModal(e) {
+  e.preventDefault();
+  document.getElementById('infinity-modal').classList.add('show');
+}
+// Paper plane from main.js won't load here since we didn't include main.js,
+// so let's add a small standalone plane just for this page:
+window.addEventListener('load', function(){
+  var s = document.createElement('style');
+  s.textContent='#i-plane{position:fixed;top:20vh;left:-80px;z-index:99999;pointer-events:none;font-size:2.5rem;animation:ifly 2.6s cubic-bezier(.4,0,.2,1) forwards;filter:drop-shadow(2px 3px 8px rgba(0,0,0,.2))}@keyframes ifly{0%{left:-80px;top:20vh;opacity:0;transform:rotate(-8deg)}10%{opacity:1}50%{top:30vh;transform:rotate(3deg)}80%{opacity:1}100%{left:calc(100vw + 80px);top:14vh;opacity:0;transform:rotate(-5deg)}}';
+  document.head.appendChild(s);
+  var p=document.createElement('div');p.id='i-plane';p.textContent='✈️';
+  document.body.appendChild(p);
+  setTimeout(function(){if(p.parentNode)p.parentNode.removeChild(p);},3000);
+});
+</script>
+</body>
+</html>

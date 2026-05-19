@@ -162,6 +162,8 @@
         <li><a href="team.html">Our Team</a></li>
         <li><a href="locations.html">Locations</a></li>
         <li><a href="news.html">News</a></li>
+        <li><a href="dundies.html">🏆 Dundies</a></li>
+        <li><a href="infinity.html">∞ Infinity</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
       <div class="nav-cta">
@@ -188,6 +190,7 @@
     <button class="category-btn" data-target="specialty">Specialty Paper</button>
     <button class="category-btn" data-target="envelopes">Envelopes</button>
     <button class="category-btn" data-target="bulk">Bulk Orders</button>
+    <button class="category-btn" data-target="calculator">📄 Get a Quote</button>
   </div>
 </nav>
 
@@ -639,6 +642,94 @@
   </div>
 </section>
 
+<!-- Paper Calculator -->
+<section class="section bg-light" id="calculator">
+  <div class="container">
+    <div class="section-header centered fade-in">
+      <span class="section-label">Instant Estimate</span>
+      <h2 class="section-title">📄 Paper Calculator</h2>
+      <p style="color:var(--text-secondary);max-width:520px;margin:0 auto 40px;line-height:1.7;">Get an instant Dunder Mifflin quote. Our prices are honest — no hidden fees, no corporate shenanigans, no watermark upcharges.</p>
+    </div>
+    <div class="fade-in" style="background:var(--white);border:1px solid var(--border);border-radius:8px;max-width:640px;margin:0 auto;padding:40px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;">
+        <div>
+          <label style="display:block;font-size:.82rem;font-weight:700;color:var(--navy-dark);margin-bottom:8px;letter-spacing:.04em;text-transform:uppercase;">Paper Size</label>
+          <select id="calc-size" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:6px;font-size:.9rem;color:var(--navy-dark);background:var(--white);">
+            <option value="letter">Letter (8.5 × 11")</option>
+            <option value="legal">Legal (8.5 × 14")</option>
+            <option value="a4">A4 (210 × 297mm)</option>
+            <option value="cardstock">Cardstock (8.5 × 11")</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block;font-size:.82rem;font-weight:700;color:var(--navy-dark);margin-bottom:8px;letter-spacing:.04em;text-transform:uppercase;">Brightness</label>
+          <select id="calc-brightness" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:6px;font-size:.9rem;color:var(--navy-dark);background:var(--white);">
+            <option value="92">92 Bright (Standard)</option>
+            <option value="96">96 Bright (Premium)</option>
+            <option value="98">98 Bright (Ultra)</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block;font-size:.82rem;font-weight:700;color:var(--navy-dark);margin-bottom:8px;letter-spacing:.04em;text-transform:uppercase;">Quantity (Reams)</label>
+          <input id="calc-qty" type="number" min="1" max="9999" value="10" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:6px;font-size:.9rem;color:var(--navy-dark);box-sizing:border-box;">
+        </div>
+        <div>
+          <label style="display:block;font-size:.82rem;font-weight:700;color:var(--navy-dark);margin-bottom:8px;letter-spacing:.04em;text-transform:uppercase;">Weight</label>
+          <select id="calc-weight" style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:6px;font-size:.9rem;color:var(--navy-dark);background:var(--white);">
+            <option value="20">20 lb Bond</option>
+            <option value="24">24 lb Bond</option>
+            <option value="32">32 lb Bond (Heavy)</option>
+          </select>
+        </div>
+      </div>
+      <button onclick="calcPaper()" style="width:100%;padding:14px;background:var(--navy);color:#fff;border:none;border-radius:6px;font-size:.95rem;font-weight:700;cursor:pointer;letter-spacing:.04em;text-transform:uppercase;transition:background .2s;" onmouseover="this.style.background='#c9a227'" onmouseout="this.style.background='var(--navy)'">Calculate My Quote</button>
+      <div id="calc-result" style="display:none;margin-top:24px;background:var(--bg-light);border-radius:8px;padding:24px;border-left:4px solid var(--gold);">
+        <div style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Your Dunder Mifflin Estimate</div>
+        <div id="calc-summary" style="font-size:.9rem;color:var(--text-secondary);line-height:1.8;margin-bottom:16px;"></div>
+        <div id="calc-price" style="font-size:2rem;font-weight:700;color:var(--navy-dark);font-family:var(--font-head);"></div>
+        <div id="calc-note" style="font-size:.78rem;color:var(--text-secondary);margin-top:6px;"></div>
+        <div id="calc-michael" style="margin-top:16px;font-style:italic;font-size:.85rem;color:var(--navy);border-top:1px solid var(--border);padding-top:14px;"></div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+function calcPaper() {
+  var size = document.getElementById('calc-size').value;
+  var brightness = parseInt(document.getElementById('calc-brightness').value);
+  var qty = Math.max(1, parseInt(document.getElementById('calc-qty').value) || 1);
+  var weight = parseInt(document.getElementById('calc-weight').value);
+
+  var base = { letter: 6.49, legal: 7.99, a4: 7.29, cardstock: 11.99 }[size];
+  var brightMult = { 92: 1, 96: 1.18, 98: 1.38 }[brightness];
+  var weightMult = { 20: 1, 24: 1.12, 32: 1.28 }[weight];
+  var price = base * brightMult * weightMult * qty;
+  var perRem = (base * brightMult * weightMult).toFixed(2);
+  var freeShip = (qty * 5) >= 5;
+  var sizeName = { letter:'Letter', legal:'Legal', a4:'A4', cardstock:'Cardstock' }[size];
+  var weightName = weight + ' lb Bond';
+
+  var michaelQuotes = [
+    '"That is a great price. I would know — I am basically a paper genius."',
+    '"Wow. I actually did not expect it to be that much. But it is worth every penny, because paper is love."',
+    '"You know what this price reminds me of? A really good deal. Which is what it is."',
+    '"I would buy all of that paper. All of it. Right now. In fact — do we have a pen?"',
+    '"Business is about money and paper. You just got a quote on both."'
+  ];
+  var q = michaelQuotes[Math.floor(Math.random() * michaelQuotes.length)];
+
+  document.getElementById('calc-summary').innerHTML =
+    qty + ' ream' + (qty !== 1 ? 's' : '') + ' · ' + sizeName + ' · ' + weight + ' lb · ' + brightness + ' Bright<br>' +
+    '<strong>$' + perRem + '</strong> per ream' + (freeShip ? ' · <span style="color:#059669;font-weight:700;">Free Delivery Included ✓</span>' : '');
+  document.getElementById('calc-price').textContent = '$' + price.toFixed(2);
+  document.getElementById('calc-note').textContent = freeShip
+    ? 'Free next-day delivery to any address within 60 miles of Scranton, PA.'
+    : 'Add ' + (Math.ceil((5 - qty * 5 / 5)) ) + ' more cases to qualify for free delivery.';
+  document.getElementById('calc-michael').innerHTML = '— Michael Scott says: ' + q;
+  document.getElementById('calc-result').style.display = 'block';
+}
+</script>
+
 <footer class="site-footer">
   <div class="container">
     <div class="footer-grid">
@@ -646,7 +737,7 @@
         <a href="index.html" class="logo"><span class="logo-dm">DUNDER MIFFLIN</span><span class="logo-sub">Paper Company</span></a>
         <p class="footer-tagline">Limitless Paper in a Paperless World.<br>Serving northeastern Pennsylvania businesses since 1987.</p>
       </div>
-      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="team.html">Our Team</a></li><li><a href="locations.html">Locations</a></li><li><a href="news.html">News</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="team.html">Our Team</a></li><li><a href="locations.html">Locations</a></li><li><a href="news.html">News</a></li><li><a href="dundies.html">The Dundies</a></li><li><a href="infinity.html">DM Infinity</a></li><li><a href="contact.html">Contact</a></li></ul></div>
       <div class="footer-col"><h4>Products</h4><ul><li><a href="products.html#copy">Copy Paper</a></li><li><a href="products.html#specialty">Specialty Paper</a></li><li><a href="products.html#envelopes">Envelopes</a></li><li><a href="products.html#bulk">Bulk Orders</a></li><li><a href="contact.html">Custom Quotes</a></li></ul></div>
       <div class="footer-col"><h4>Scranton Office</h4><p class="footer-contact-item"><strong>1725 Slough Avenue</strong><br>Scranton, PA 18505</p><p class="footer-contact-item">📞 (570) 555-0147</p><p class="footer-contact-item">✉️ scranton@dundermifflin.com</p><p class="footer-contact-item">Mon–Fri: 8:00am – 6:00pm</p></div>
     </div>

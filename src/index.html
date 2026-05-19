@@ -27,6 +27,9 @@
         <li><a href="team.html">Our Team</a></li>
         <li><a href="locations.html">Locations</a></li>
         <li><a href="news.html">News</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="dundies.html">🏆 Dundies</a></li>
+        <li><a href="infinity.html">∞ Infinity</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
       <div class="nav-cta">
@@ -51,9 +54,44 @@
         <a href="products.html" class="btn btn-gold">Explore Our Products</a>
         <a href="team.html" class="btn btn-outline-white">Meet Our Team</a>
       </div>
+      <div id="michael-quote-box" style="margin-top:32px;max-width:520px;background:rgba(255,255,255,.08);border-left:3px solid #c9a227;border-radius:0 6px 6px 0;padding:14px 20px;">
+        <p id="michael-quote" style="color:rgba(255,255,255,.9);font-style:italic;font-size:.95rem;line-height:1.6;margin:0 0 6px;transition:opacity .5s;"></p>
+        <span style="color:#c9a227;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;">— Michael Scott, Regional Manager</span>
+      </div>
     </div>
   </div>
 </section>
+<script>
+(function(){
+  var quotes = [
+    "Would I rather be feared or loved? Easy. Both. I want people to be afraid of how much they love me.",
+    "I'm not superstitious, but I am a little stitious.",
+    "I have a lot of questions. Number one: how dare you?",
+    "This is the smallest amount of paper I have ever seen.",
+    "Do I need to be liked? Absolutely not. I like to be liked. I enjoy being liked. I have to be liked. But it's not like a compulsive need to be liked — like my need to be praised.",
+    "I am running away from my responsibilities. And it feels good.",
+    "Sometimes I'll start a sentence and I don't even know where it's going. I just hope I find it along the way.",
+    "An office is for not dying. An office is a place to live life to the fullest, to the max.",
+    "I love inside jokes. I hope to be a part of one someday.",
+    "Business is always personal. It's the most personal thing in the world.",
+    "I am Michael Scott — and I am ready to get hurt again.",
+    "I'm not a millionaire. I thought I would be by the time I was thirty, but I wasn't even close. Then I thought maybe by forty, but forty came and went. Now I'm just hoping to die before I run out of money.",
+    "Webster's Dictionary defines wedding as: the fusing of two metals with a hot torch.",
+    "Well, well, well — how the turntable."
+  ];
+  var i = Math.floor(Math.random() * quotes.length);
+  var el = document.getElementById('michael-quote');
+  function show(idx) {
+    el.style.opacity = '0';
+    setTimeout(function(){
+      el.textContent = '“' + quotes[idx] + '”';
+      el.style.opacity = '1';
+    }, 500);
+  }
+  show(i);
+  setInterval(function(){ i = (i + 1) % quotes.length; show(i); }, 7000);
+})();
+</script>
 
 <!-- ── Stats Bar ──────────────────────────────────── -->
 <div class="stats-bar">

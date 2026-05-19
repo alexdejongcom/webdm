@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Dundies — Dunder Mifflin Paper Company</title>
+  <meta name="description" content="The Dunder Mifflin Scranton Branch Annual Dundie Awards — celebrating the best (and the rest) of the Scranton office.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .dundies-hero {
+      background: linear-gradient(135deg, #0f2444 0%, #1b3a6b 60%, #92400e 100%);
+      padding: 80px 0 64px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .dundies-hero::before {
+      content: '🏆🏆🏆🏆🏆🏆🏆🏆🏆🏆🏆🏆🏆🏆🏆🏆';
+      position: absolute; top: 0; left: 0; right: 0;
+      font-size: 2rem; letter-spacing: 6px; opacity: .07;
+      white-space: nowrap; overflow: hidden;
+      animation: trophyScroll 18s linear infinite;
+    }
+    @keyframes trophyScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .dundies-hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      color: #c9a227;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 16px rgba(0,0,0,.4);
+    }
+    .dundies-hero p {
+      color: rgba(255,255,255,.8);
+      font-size: 1.1rem;
+      max-width: 520px;
+      margin: 0 auto 8px;
+      line-height: 1.7;
+    }
+    .dundies-meta {
+      display: inline-block;
+      background: rgba(201,162,39,.2);
+      border: 1px solid rgba(201,162,39,.4);
+      color: #c9a227;
+      padding: 6px 18px;
+      border-radius: 99px;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-top: 16px;
+    }
+
+    .winner-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 28px;
+      margin-top: 48px;
+    }
+    .winner-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: box-shadow .2s, transform .2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .winner-card:hover {
+      box-shadow: 0 10px 36px rgba(27,58,107,.12);
+      transform: translateY(-4px);
+    }
+    .winner-card-top {
+      background: linear-gradient(135deg, #0f2444, #1b3a6b);
+      padding: 28px 24px 20px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .winner-photo {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: top center;
+      border: 3px solid #c9a227;
+      flex-shrink: 0;
+    }
+    .winner-trophy { font-size: 3rem; flex-shrink: 0; }
+    .winner-award-name {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      color: #c9a227;
+      line-height: 1.3;
+    }
+    .winner-name {
+      color: rgba(255,255,255,.9);
+      font-size: .82rem;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    .winner-card-body {
+      padding: 20px 24px 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .winner-card-body p {
+      font-size: .87rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      flex: 1;
+      margin: 0 0 16px;
+    }
+    .winner-speech {
+      background: var(--bg-light);
+      border-left: 3px solid #c9a227;
+      border-radius: 0 6px 6px 0;
+      padding: 12px 14px;
+      font-style: italic;
+      font-size: .82rem;
+      color: var(--navy-dark);
+      line-height: 1.6;
+    }
+    .winner-speech strong {
+      display: block;
+      font-style: normal;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #c9a227;
+      margin-bottom: 6px;
+    }
+
+    .host-card {
+      background: var(--navy);
+      border-radius: 12px;
+      padding: 48px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 32px;
+      align-items: center;
+      margin-bottom: 64px;
+    }
+    .host-photo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: top center;
+      border: 4px solid #c9a227;
+    }
+    .host-card h2 {
+      font-family: var(--font-head);
+      font-size: 1.75rem;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .host-card .host-role {
+      color: #c9a227;
+      font-size: .82rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .host-card p { color: rgba(255,255,255,.75); line-height: 1.7; margin: 0; }
+
+    .venue-banner {
+      background: var(--bg-light);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 32px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-top: 64px;
+    }
+    .venue-banner h3 {
+      font-family: var(--font-head);
+      font-size: 1.3rem;
+      color: var(--navy-dark);
+      margin-bottom: 6px;
+    }
+    .venue-banner p { color: var(--text-secondary); font-size: .9rem; max-width: 480px; line-height: 1.65; margin: 0; }
+
+    @media (max-width: 600px) {
+      .host-card { grid-template-columns: 1fr; text-align: center; }
+      .host-photo { margin: 0 auto; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <nav class="nav-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-dm">DUNDER MIFFLIN</span>
+        <span class="logo-sub">Paper Company</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="team.html">Our Team</a></li>
+        <li><a href="locations.html">Locations</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="dundies.html">🏆 Dundies</a></li>
+        <li><a href="infinity.html">∞ Infinity</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="tel:+15705550147" class="btn btn-outline-navy">(570) 555-0147</a>
+        <a href="contact.html" class="btn btn-gold">Request a Quote</a>
+      </div>
+      <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </nav>
+  </div>
+</header>
+
+<div class="dundies-hero">
+  <div class="container">
+    <nav class="breadcrumb" style="justify-content:center;margin-bottom:24px;"><a href="index.html" style="color:rgba(255,255,255,.6);">Home</a><span class="breadcrumb-sep" style="color:rgba(255,255,255,.4);">›</span><span style="color:rgba(255,255,255,.6);">The Dundies</span></nav>
+    <h1>🏆 The Dundies 🏆</h1>
+    <p>The Dunder Mifflin Scranton Branch Annual Employee Awards — celebrating excellence, persistence, and whatever it is that Creed does.</p>
+    <div class="dundies-meta">2025 Ceremony · Chili's on Route 6 · Attendance Mandatory</div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+
+    <!-- Host -->
+    <div class="host-card fade-in">
+      <img class="host-photo" src="https://www.thatswhatwhosaid.com/images/characters/michael.webp" alt="Michael Scott">
+      <div>
+        <h2>Your Host: Michael Scott</h2>
+        <div class="host-role">Regional Manager &amp; Creator of the Dundies</div>
+        <p>The Dundies were created in 2002 by Regional Manager Michael Scott, who describes them as "my baby, my gift to this office, and also the greatest awards ceremony in the history of awards ceremonies, including the Oscars, which I have watched every single year." The awards are self-funded by Michael, purchased at a local trophy shop, and engraved by Michael personally. Attendance is mandatory. Fun is non-negotiable. Toby is not invited.</p>
+      </div>
+    </div>
+
+    <!-- Winners -->
+    <div class="section-header fade-in">
+      <span class="section-label">2025 Winners</span>
+      <h2 class="section-title">And the Dundie goes to…</h2>
+    </div>
+
+    <div class="winner-grid" data-stagger>
+
+      <div class="winner-card fade-in">
+        <div class="winner-card-top">
+          <span class="winner-trophy">🏆</span>
+          <div>
+            <div class="winner-award-name">Best Boss</div>
+            <div class="winner-name">Michael Scott</div>
+          </div>
+        </div>
+        <div class="winner-card-body">
+          <p>Presented by Michael Scott to Michael Scott. "I wrestled with this one," Michael noted during the ceremony. "There were other candidates. I just can't think of any right now."</p>
+          <div class="winner-speech"><strong>Acceptance Speech</strong>"I want to thank me. I want to thank me for believing in me. I want to thank me for never giving up on me."</div>
+        </div>
+      </div>
+
+      <div class="winner-card fade-in">
+        <div class="winner-card-top">
+          <img class="winner-photo" src="https://www.thatswhatwhosaid.com/images/characters/dwight.webp" alt="Dwight Schrute">
+          <div>
+            <div class="winner-award-name">Busiest Beaver</div>
+            <div class="winner-name">Dwight Schrute</div>
+          </div>
+        </div>
+        <div class="winner-card-body">
+          <p>Dwight logged the most hours of any employee in 2025, including three Saturdays, one federal holiday, and a Tuesday he came in despite being asked not to. He also submitted 34 formal complaints about office security, all of which he also personally investigated.</p>
+          <div class="winner-speech"><strong>Acceptance Speech</strong>"I accept this award on behalf of productivity, order, and the beet. I will display it prominently at my desk to remind others what dedication looks like."</div>
+        </div>
+      </div>
+
+      <div class="winner-card fade-in">
+        <div class="winner-card-top">
+          <img class="winner-photo" src="https://www.thatswhatwhosaid.com/images/characters/jim.webp" alt="Jim Halpert">
+          <div>
+            <div class="winner-award-name">Hottest in the Office (Runner-Up)</div>
+            <div class="winner-name">Jim Halpert</div>
+          </div>
+        </div>
+        <div class="winner-card-body">
+          <p>Ryan Howard won the actual award, but Jim received a special runner-up Dundie for the first time in ceremony history. Jim did not attend the table read rehearsal but still managed to accept the award with more poise than anyone who rehearsed.</p>
+          <div class="winner-speech"><strong>Acceptance Speech</strong>"Wow. This is — yeah. I'm going to put this next to my actual work awards. Right next to them."</div>
+        </div>
+      </div>
+
+      <div class="winner-card fade-in">
+        <div class="winner-card-top">
+          <img class="winner-photo" src="https://www.thatswhatwhosaid.com/images/characters/pam.webp" alt="Pam Beesly">
+          <div>
+            <div class="winner-award-name">Whitest Sneakers</div>
+            <div class="winner-name">Pam Beesly</div>
+          </div>
+        </div>
+        <div class="winner-card-body">
+          <p>Pam edged out Kelly Kapoor in a controversial result that Kelly has not fully accepted. Pam's sneakers were described by Michael as "the kind of white that makes you feel like anything is possible." Pam thanked her shoes.</p>
+          <div class="winner-speech"><strong>Acceptance Speech</strong>"I just want to say — I've been coming to these for years, and I finally feel like I belong. Also these are just regular shoes."</div>
+        </div>
+      </div>
+
+      <div class="winner-card fade-in">
+        <div class="winner-card-top">
+          <img class="winner-photo" src="https://www.thatswhatwhosaid.com/images/characters/kevin.webp" alt="Kevin Malone">
+          <div>
+            <div class="winner-award-name">Don't Go In There After Me</div>
+            <div class="winner-name">Kevin Malone</div>
+          </div>
+        </div>
+        <div class="winner-card-body">
+          <p>Kevin has won this award every year since the Dundies began. The award has been retired in his honour, meaning he now wins a "Lifetime Achievement in the Category of Don't Go In There After Me." Kevin was moved to tears. The chili is unrelated.</p>
+          <div class="winner-speech"><strong>Acceptance Speech</strong>"Thank you. This means a lot. Also — the chili was very good this year. Very good."</div>
+        </div>
+      </div>
+
+      <div class="winner-card fade-in">
+        <div class="winner-card-top">
+          <img class="winner-photo" src="https://www.thatswhatwhosaid.com/images/characters/angela.webp" alt="Angela Martin">
+          <div>
+            <div class="winner-award-name">Best Cat Owner</div>
+            <div class="winner-name">Angela Martin</div>
+          </div>
+        </div>
+        <div class="winner-card-body">
+          <p>Angela won Best Cat Owner for the fourteenth consecutive year. Michael created this category specifically for her in 2002 and has never considered retiring it. Angela accepted with characteristic restraint, noting that "Sprinkles would have wanted this."</p>
+          <div class="winner-speech"><strong>Acceptance Speech</strong>"My cats are excellent. This award is correct. I have nothing further to add."</div>
+        </div>
+      </div>
+
+      <div class="winner-card fade-in">
+        <div class="winner-card-top">
+          <img class="winner-photo" src="https://www.thatswhatwhosaid.com/images/characters/oscar.webp" alt="Oscar Martinez">
+          <div>
+            <div class="winner-award-name">Spicy Curry Award</div>
+            <div class="winner-name">Oscar Martinez</div>
+          </div>
+        </div>
+        <div class="winner-card-body">
+          <p>Awarded for the most culturally enriching contribution to breakroom conversation in 2025. Oscar received this award while visibly conflicted about accepting it. He did, however, give a thoughtful speech about the importance of nuance in workplace communication.</p>
+          <div class="winner-speech"><strong>Acceptance Speech</strong>"I'm choosing to interpret this generously. Thank you. I think. I'm going to go home and think about this."</div>
+        </div>
+      </div>
+
+      <div class="winner-card fade-in">
+        <div class="winner-card-top">
+          <img class="winner-photo" src="https://www.thatswhatwhosaid.com/images/characters/creed.webp" alt="Creed Bratton">
+          <div>
+            <div class="winner-award-name">Dooce McGee Award</div>
+            <div class="winner-name">Creed Bratton</div>
+          </div>
+        </div>
+        <div class="winner-card-body">
+          <p>No one, including Michael, was able to explain what this award means. Creed did not ask for clarification. He accepted it warmly, mentioned a place called "the Napa Valley of the mid-Atlantic," and sat down. The award looked identical to last year's.</p>
+          <div class="winner-speech"><strong>Acceptance Speech</strong>"I know exactly what I did to deserve this. And so do you."</div>
+        </div>
+      </div>
+
+      <div class="winner-card fade-in">
+        <div class="winner-card-top">
+          <img class="winner-photo" src="https://www.thatswhatwhosaid.com/images/characters/ryan.webp" alt="Ryan Howard">
+          <div>
+            <div class="winner-award-name">Hottest in the Office</div>
+            <div class="winner-name">Ryan Howard</div>
+          </div>
+        </div>
+        <div class="winner-card-body">
+          <p>Ryan won for the third consecutive year. He did not attend the ceremony. Michael accepted on his behalf and gave a short speech about "the mystery of Ryan" that lasted twelve minutes and referenced the film <em>The Talented Mr. Ripley</em> twice.</p>
+          <div class="winner-speech"><strong>Acceptance Speech (via text)</strong>"Thanks. Can't make it. New thing."</div>
+        </div>
+      </div>
+
+      <div class="winner-card fade-in">
+        <div class="winner-card-top">
+          <img class="winner-photo" src="https://www.thatswhatwhosaid.com/images/characters/toby.webp" alt="Toby Flenderson">
+          <div>
+            <div class="winner-award-name">Fun Buster Award</div>
+            <div class="winner-name">Toby Flenderson</div>
+          </div>
+        </div>
+        <div class="winner-card-body">
+          <p>Toby was not technically invited to the 2025 Dundies. He attended anyway and received the Fun Buster Award, which Michael delivered to his table without making eye contact. Toby tried to say something. Michael had already walked away.</p>
+          <div class="winner-speech"><strong>Acceptance Speech</strong>"I just want to say — I think these are actually really nice, and — [applause ended]"</div>
+        </div>
+      </div>
+
+      <div class="winner-card fade-in">
+        <div class="winner-card-top">
+          <img class="winner-photo" src="https://www.thatswhatwhosaid.com/images/characters/darryl.webp" alt="Darryl Philbin">
+          <div>
+            <div class="winner-award-name">Most Likely to Be Running the Whole Operation One Day</div>
+            <div class="winner-name">Darryl Philbin</div>
+          </div>
+        </div>
+        <div class="winner-card-body">
+          <p>Widely regarded as the most sincere Dundie of the evening. Darryl accepted with a nod and a quiet "yeah, probably." Several employees began applauding before Michael even announced the winner. Michael did not notice.</p>
+          <div class="winner-speech"><strong>Acceptance Speech</strong>"I'll keep this short because I've got a 7am. But yes — I'm working on it."</div>
+        </div>
+      </div>
+
+      <div class="winner-card fade-in">
+        <div class="winner-card-top">
+          <img class="winner-photo" src="https://www.thatswhatwhosaid.com/images/characters/stanley.webp" alt="Stanley Hudson">
+          <div>
+            <div class="winner-award-name">Extreme Hardass Award</div>
+            <div class="winner-name">Stanley Hudson</div>
+          </div>
+        </div>
+        <div class="winner-card-body">
+          <p>Stanley arrived at Chili's, ate his riblets, accepted his award, and left before dessert. He did not give a speech. He turned at the door and gave a single nod, which Michael described as "extremely moving." It took 90 seconds total.</p>
+          <div class="winner-speech"><strong>Acceptance Speech</strong>[nods]</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Venue -->
+    <div class="venue-banner fade-in">
+      <div>
+        <h3>📍 Venue: Chili's Bar &amp; Grill, Route 6, Scranton PA</h3>
+        <p>The Dundies have been held at Chili's on Route 6 since the inaugural ceremony in 2002. Management has asked us not to return, each year, for twelve consecutive years. We return anyway. The riblets are very good and the bar staff now recognise Michael by name.</p>
+      </div>
+      <a href="contact.html" class="btn btn-gold" style="flex-shrink:0;">Nominate a Colleague</a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo"><span class="logo-dm">DUNDER MIFFLIN</span><span class="logo-sub">Paper Company</span></a>
+        <p class="footer-tagline">Limitless Paper in a Paperless World.<br>Serving northeastern Pennsylvania businesses since 1987.</p>
+      </div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="team.html">Our Team</a></li><li><a href="dundies.html">The Dundies</a></li><li><a href="locations.html">Locations</a></li><li><a href="news.html">News</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Products</h4><ul><li><a href="products.html#copy">Copy Paper</a></li><li><a href="products.html#specialty">Specialty Paper</a></li><li><a href="products.html#envelopes">Envelopes</a></li><li><a href="products.html#bulk">Bulk Orders</a></li><li><a href="contact.html">Custom Quotes</a></li></ul></div>
+      <div class="footer-col"><h4>Scranton Office</h4><p class="footer-contact-item"><strong>1725 Slough Avenue</strong><br>Scranton, PA 18505</p><p class="footer-contact-item">📞 (570) 555-0147</p><p class="footer-contact-item">✉️ scranton@dundermifflin.com</p><p class="footer-contact-item">Mon–Fri: 8:00am – 6:00pm</p></div>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="container"><div class="footer-bottom"><span>© 2025 Dunder Mifflin, Inc. All rights reserved.</span><span>Scranton, PA · Stamford, CT · Nashua, NH · Albany, NY · and 8 more locations</span></div></div>
+</footer>
+<script src="js/main.js"></script>
+</body>
+</html>
