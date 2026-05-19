@@ -1,0 +1,18 @@
+{
+  "routes": [
+    { "route": "/about",     "rewrite": "/about.html" },
+    { "route": "/products",  "rewrite": "/products.html" },
+    { "route": "/team",      "rewrite": "/team.html" },
+    { "route": "/locations", "rewrite": "/locations.html" },
+    { "route": "/news",      "rewrite": "/news.html" },
+    { "route": "/contact",   "rewrite": "/contact.html" }
+  ],
+  "responseOverrides": {
+    "404": { "rewrite": "/index.html", "statusCode": 200 }
+  },
+  "globalHeaders": {
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options":        "SAMEORIGIN",
+    "Referrer-Policy":        "strict-origin-when-cross-origin"
+  }
+}

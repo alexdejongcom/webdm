@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Locations — Dunder Mifflin Paper Company</title>
+  <meta name="description" content="Dunder Mifflin operates twelve branch offices across the northeastern United States. Find your nearest location for paper supply and delivery.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ── Featured location (Scranton) ── */
+    .featured-location {
+      background: var(--navy);
+      border-radius: 8px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 360px;
+      margin-bottom: 64px;
+    }
+    .featured-location-info {
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .featured-badge {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--white);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 99px;
+      margin-bottom: 16px;
+    }
+    .featured-location h2 {
+      font-family: var(--font-head);
+      font-size: 2rem;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .featured-location .branch-city {
+      color: var(--gold-light);
+      font-size: .9rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .location-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 12px;
+      font-size: .875rem;
+      color: rgba(255,255,255,.75);
+    }
+    .location-detail-icon {
+      flex-shrink: 0;
+      width: 18px;
+      text-align: center;
+      margin-top: 1px;
+    }
+    .featured-location .btn {
+      align-self: flex-start;
+      margin-top: 24px;
+    }
+    .featured-location-map {
+      background: #c8d6e5;
+      position: relative;
+      overflow: hidden;
+    }
+    .featured-location-map iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* ── Branch grid ── */
+    .branches-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .branches-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .branch-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 28px;
+      transition: box-shadow .2s, transform .2s;
+    }
+    .branch-card:hover {
+      box-shadow: 0 6px 24px rgba(27,58,107,.1);
+      transform: translateY(-2px);
+    }
+    .branch-card-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .branch-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      background: rgba(27,58,107,.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+    .branch-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy-dark);
+      margin-bottom: 2px;
+    }
+    .branch-state {
+      font-size: .75rem;
+      color: var(--text-secondary);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .branch-address {
+      font-size: .84rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .branch-phone {
+      font-size: .84rem;
+      color: var(--navy);
+      font-weight: 600;
+    }
+    .branch-hours {
+      font-size: .78rem;
+      color: var(--text-secondary);
+      margin-top: 8px;
+    }
+    .branch-tag {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 99px;
+      background: rgba(27,58,107,.08);
+      color: var(--navy);
+    }
+
+    /* ── Regional map callout ── */
+    .region-map-callout {
+      background: var(--bg-light);
+      border-radius: 8px;
+      padding: 48px;
+      text-align: center;
+      margin-top: 64px;
+    }
+    .region-map-callout h2 {
+      font-family: var(--font-head);
+      font-size: 1.75rem;
+      color: var(--navy-dark);
+      margin-bottom: 8px;
+    }
+    .region-map-callout p {
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin: 0 auto 24px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 768px) {
+      .featured-location {
+        grid-template-columns: 1fr;
+      }
+      .featured-location-map {
+        height: 240px;
+      }
+    }
+    @media (max-width: 480px) {
+      .featured-location-info { padding: 28px 24px; }
+      .region-map-callout { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <nav class="nav-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-dm">DUNDER MIFFLIN</span>
+        <span class="logo-sub">Paper Company</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="team.html">Our Team</a></li>
+        <li><a href="locations.html">Locations</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="tel:+15705550147" class="btn btn-outline-navy">(570) 555-0147</a>
+        <a href="contact.html" class="btn btn-gold">Request a Quote</a>
+      </div>
+      <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <nav class="breadcrumb"><a href="index.html">Home</a><span class="breadcrumb-sep">›</span><span>Locations</span></nav>
+    <h1>Our Locations</h1>
+    <p style="color:rgba(255,255,255,.8);max-width:560px;margin-top:12px;font-size:1.05rem;line-height:1.7;">Twelve branches across the northeastern United States — with local warehouses, local reps, and local delivery.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <!-- Featured: Scranton -->
+    <div class="featured-location fade-in">
+      <div class="featured-location-info">
+        <span class="featured-badge">Flagship Branch</span>
+        <h2>Scranton Branch</h2>
+        <div class="branch-city">Scranton, Pennsylvania</div>
+        <div class="location-detail">
+          <span class="location-detail-icon">📍</span>
+          <span>1725 Slough Avenue, Scranton, PA 18505</span>
+        </div>
+        <div class="location-detail">
+          <span class="location-detail-icon">📞</span>
+          <span>(570) 555-0147</span>
+        </div>
+        <div class="location-detail">
+          <span class="location-detail-icon">✉️</span>
+          <span>scranton@dundermifflin.com</span>
+        </div>
+        <div class="location-detail">
+          <span class="location-detail-icon">🕐</span>
+          <span>Monday – Friday: 8:00 am – 6:00 pm<br>Saturday: 9:00 am – 1:00 pm (warehouse pickup only)</span>
+        </div>
+        <div class="location-detail">
+          <span class="location-detail-icon">🚚</span>
+          <span>Same-day dispatch on orders placed before 3:00 pm. Free delivery on 5+ cases within 60 miles.</span>
+        </div>
+        <a href="contact.html" class="btn btn-gold">Contact This Branch</a>
+      </div>
+      <div class="featured-location-map">
+        <iframe
+          src="https://www.openstreetmap.org/export/embed.html?bbox=-75.7200%2C41.3800%2C-75.6200%2C41.4400&layer=mapnik&marker=41.4090%2C-75.6624"
+          title="Scranton, Pennsylvania map"
+          loading="lazy"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+
+    <!-- Other branches -->
+    <div class="branches-header fade-in">
+      <div>
+        <span class="section-label">All Locations</span>
+        <h2 class="section-title" style="margin-bottom:0">Our other eleven branches</h2>
+      </div>
+    </div>
+
+    <div class="branches-grid" data-stagger>
+
+      <div class="branch-card fade-in">
+        <div class="branch-card-header">
+          <div class="branch-icon">🏙️</div>
+          <div>
+            <h3>Stamford Branch</h3>
+            <div class="branch-state">Connecticut</div>
+          </div>
+        </div>
+        <p class="branch-address">88 Long Ridge Road<br>Stamford, CT 06902</p>
+        <div class="branch-phone">(203) 555-0198</div>
+        <div class="branch-hours">Mon–Fri: 8:00 am – 6:00 pm</div>
+        <span class="branch-tag">Mid-Atlantic Region</span>
+      </div>
+
+      <div class="branch-card fade-in">
+        <div class="branch-card-header">
+          <div class="branch-icon">🏙️</div>
+          <div>
+            <h3>Nashua Branch</h3>
+            <div class="branch-state">New Hampshire</div>
+          </div>
+        </div>
+        <p class="branch-address">14 Coliseum Avenue<br>Nashua, NH 03060</p>
+        <div class="branch-phone">(603) 555-0122</div>
+        <div class="branch-hours">Mon–Fri: 8:00 am – 5:30 pm</div>
+        <span class="branch-tag">New England Region</span>
+      </div>
+
+      <div class="branch-card fade-in">
+        <div class="branch-card-header">
+          <div class="branch-icon">🏙️</div>
+          <div>
+            <h3>Albany Branch</h3>
+            <div class="branch-state">New York</div>
+          </div>
+        </div>
+        <p class="branch-address">60 State Street, Suite 400<br>Albany, NY 12207</p>
+        <div class="branch-phone">(518) 555-0134</div>
+        <div class="branch-hours">Mon–Fri: 8:00 am – 6:00 pm</div>
+        <span class="branch-tag">New York Region</span>
+      </div>
+
+      <div class="branch-card fade-in">
+        <div class="branch-card-header">
+          <div class="branch-icon">🏙️</div>
+          <div>
+            <h3>Utica Branch</h3>
+            <div class="branch-state">New York</div>
+          </div>
+        </div>
+        <p class="branch-address">258 Genesee Street<br>Utica, NY 13502</p>
+        <div class="branch-phone">(315) 555-0177</div>
+        <div class="branch-hours">Mon–Fri: 8:00 am – 5:30 pm</div>
+        <span class="branch-tag">New York Region</span>
+      </div>
+
+      <div class="branch-card fade-in">
+        <div class="branch-card-header">
+          <div class="branch-icon">🏙️</div>
+          <div>
+            <h3>Camden Branch</h3>
+            <div class="branch-state">New Jersey</div>
+          </div>
+        </div>
+        <p class="branch-address">520 Market Street<br>Camden, NJ 08102</p>
+        <div class="branch-phone">(856) 555-0109</div>
+        <div class="branch-hours">Mon–Fri: 8:00 am – 6:00 pm</div>
+        <span class="branch-tag">Mid-Atlantic Region</span>
+      </div>
+
+      <div class="branch-card fade-in">
+        <div class="branch-card-header">
+          <div class="branch-icon">🏙️</div>
+          <div>
+            <h3>Yonkers Branch</h3>
+            <div class="branch-state">New York</div>
+          </div>
+        </div>
+        <p class="branch-address">87 Nepperhan Avenue<br>Yonkers, NY 10701</p>
+        <div class="branch-phone">(914) 555-0166</div>
+        <div class="branch-hours">Mon–Fri: 8:00 am – 6:00 pm</div>
+        <span class="branch-tag">New York Region</span>
+      </div>
+
+      <div class="branch-card fade-in">
+        <div class="branch-card-header">
+          <div class="branch-icon">🏙️</div>
+          <div>
+            <h3>Buffalo Branch</h3>
+            <div class="branch-state">New York</div>
+          </div>
+        </div>
+        <p class="branch-address">415 Main Street<br>Buffalo, NY 14203</p>
+        <div class="branch-phone">(716) 555-0141</div>
+        <div class="branch-hours">Mon–Fri: 8:00 am – 5:30 pm</div>
+        <span class="branch-tag">New York Region</span>
+      </div>
+
+      <div class="branch-card fade-in">
+        <div class="branch-card-header">
+          <div class="branch-icon">🏙️</div>
+          <div>
+            <h3>Providence Branch</h3>
+            <div class="branch-state">Rhode Island</div>
+          </div>
+        </div>
+        <p class="branch-address">180 Westminster Street<br>Providence, RI 02903</p>
+        <div class="branch-phone">(401) 555-0188</div>
+        <div class="branch-hours">Mon–Fri: 8:00 am – 5:30 pm</div>
+        <span class="branch-tag">New England Region</span>
+      </div>
+
+      <div class="branch-card fade-in">
+        <div class="branch-card-header">
+          <div class="branch-icon">🏙️</div>
+          <div>
+            <h3>Pittsfield Branch</h3>
+            <div class="branch-state">Massachusetts</div>
+          </div>
+        </div>
+        <p class="branch-address">70 Allen Street<br>Pittsfield, MA 01201</p>
+        <div class="branch-phone">(413) 555-0155</div>
+        <div class="branch-hours">Mon–Fri: 8:00 am – 5:00 pm</div>
+        <span class="branch-tag">New England Region</span>
+      </div>
+
+      <div class="branch-card fade-in">
+        <div class="branch-card-header">
+          <div class="branch-icon">🏙️</div>
+          <div>
+            <h3>Allentown Branch</h3>
+            <div class="branch-state">Pennsylvania</div>
+          </div>
+        </div>
+        <p class="branch-address">937 Hamilton Street<br>Allentown, PA 18101</p>
+        <div class="branch-phone">(610) 555-0173</div>
+        <div class="branch-hours">Mon–Fri: 8:00 am – 6:00 pm</div>
+        <span class="branch-tag">Mid-Atlantic Region</span>
+      </div>
+
+      <div class="branch-card fade-in">
+        <div class="branch-card-header">
+          <div class="branch-icon">🏙️</div>
+          <div>
+            <h3>Binghamton Branch</h3>
+            <div class="branch-state">New York</div>
+          </div>
+        </div>
+        <p class="branch-address">49 Court Street<br>Binghamton, NY 13901</p>
+        <div class="branch-phone">(607) 555-0192</div>
+        <div class="branch-hours">Mon–Fri: 8:00 am – 5:30 pm</div>
+        <span class="branch-tag">New York Region</span>
+      </div>
+
+    </div>
+
+    <!-- Regional coverage callout -->
+    <div class="region-map-callout fade-in">
+      <h2>Covering the entire Northeast</h2>
+      <p>From Maine to Maryland, all twelve Dunder Mifflin branches operate with local warehouses and local delivery teams. Every branch carries a minimum of 200 SKUs in stock — no inter-branch transfers, no waiting on distant distribution centres.</p>
+      <a href="contact.html" class="btn btn-navy">Find Your Rep</a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo"><span class="logo-dm">DUNDER MIFFLIN</span><span class="logo-sub">Paper Company</span></a>
+        <p class="footer-tagline">Limitless Paper in a Paperless World.<br>Serving northeastern Pennsylvania businesses since 1987.</p>
+      </div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="team.html">Our Team</a></li><li><a href="locations.html">Locations</a></li><li><a href="news.html">News</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Products</h4><ul><li><a href="products.html#copy">Copy Paper</a></li><li><a href="products.html#specialty">Specialty Paper</a></li><li><a href="products.html#envelopes">Envelopes</a></li><li><a href="products.html#bulk">Bulk Orders</a></li><li><a href="contact.html">Custom Quotes</a></li></ul></div>
+      <div class="footer-col"><h4>Scranton Office</h4><p class="footer-contact-item"><strong>1725 Slough Avenue</strong><br>Scranton, PA 18505</p><p class="footer-contact-item">📞 (570) 555-0147</p><p class="footer-contact-item">✉️ scranton@dundermifflin.com</p><p class="footer-contact-item">Mon–Fri: 8:00am – 6:00pm</p></div>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="container"><div class="footer-bottom"><span>© 2025 Dunder Mifflin, Inc. All rights reserved.</span><span>Scranton, PA · Stamford, CT · Nashua, NH · Albany, NY · and 8 more locations</span></div></div>
+</footer>
+<script src="js/main.js"></script>
+</body>
+</html>

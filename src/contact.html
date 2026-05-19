@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us — Dunder Mifflin Paper Company</title>
+  <meta name="description" content="Get in touch with Dunder Mifflin's Scranton branch. Request a quote, place an order, or speak directly with a sales representative.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 64px;
+      align-items: start;
+    }
+
+    /* ── Form ── */
+    .form-heading {
+      font-family: var(--font-head);
+      font-size: 1.75rem;
+      color: var(--navy-dark);
+      margin-bottom: 8px;
+    }
+    .form-subheading {
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      line-height: 1.65;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--navy-dark);
+      letter-spacing: .03em;
+    }
+    .form-label .required { color: var(--gold); margin-left: 2px; }
+    .form-control {
+      padding: 11px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      font-size: .9rem;
+      font-family: var(--font-body);
+      color: var(--text-primary);
+      background: var(--white);
+      transition: border-color .2s, box-shadow .2s;
+      outline: none;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .form-control:focus {
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(27,58,107,.1);
+    }
+    textarea.form-control {
+      resize: vertical;
+      min-height: 120px;
+    }
+    select.form-control { cursor: pointer; }
+    .form-hint {
+      font-size: .75rem;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+    .form-submit-row {
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .form-legal {
+      font-size: .75rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 48px 32px;
+      background: rgba(22,163,74,.06);
+      border: 1px solid rgba(22,163,74,.2);
+      border-radius: 8px;
+    }
+    .form-success-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+    .form-success h3 {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      color: var(--navy-dark);
+      margin-bottom: 8px;
+    }
+    .form-success p {
+      color: var(--text-secondary);
+      max-width: 400px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    /* ── Sidebar ── */
+    .contact-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .contact-info-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 28px;
+    }
+    .contact-info-card h3 {
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+    .contact-detail {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 16px;
+      font-size: .875rem;
+    }
+    .contact-detail:last-child { margin-bottom: 0; }
+    .contact-detail-icon {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      background: rgba(27,58,107,.07);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+    .contact-detail-body strong {
+      display: block;
+      color: var(--navy-dark);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .contact-detail-body span {
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .contact-detail-body a {
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .contact-detail-body a:hover { color: var(--gold); }
+
+    .hours-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 6px 16px;
+      font-size: .84rem;
+    }
+    .hours-day { color: var(--text-secondary); }
+    .hours-time { color: var(--navy-dark); font-weight: 600; text-align: right; }
+
+    .rep-card {
+      background: var(--navy);
+      border-radius: 8px;
+      padding: 28px;
+      color: var(--white);
+    }
+    .rep-card h3 {
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.55);
+      margin-bottom: 16px;
+    }
+    .rep-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 14px;
+    }
+    .rep-card .rep-name {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--white);
+      margin-bottom: 2px;
+    }
+    .rep-card .rep-title {
+      font-size: .78rem;
+      color: rgba(255,255,255,.6);
+      margin-bottom: 14px;
+    }
+    .rep-card p {
+      font-size: .84rem;
+      color: rgba(255,255,255,.7);
+      line-height: 1.65;
+    }
+    .rep-card .rep-phone {
+      display: block;
+      margin-top: 14px;
+      font-weight: 700;
+      color: var(--gold-light);
+      font-size: .9rem;
+      text-decoration: none;
+    }
+
+    /* ── Map strip ── */
+    .map-strip {
+      height: 280px;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 48px;
+      border: 1px solid var(--border);
+    }
+    .map-strip iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    @media (max-width: 992px) {
+      .contact-layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .contact-sidebar { order: -1; }
+      .contact-sidebar { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    }
+    @media (max-width: 560px) {
+      .form-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <nav class="nav-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-dm">DUNDER MIFFLIN</span>
+        <span class="logo-sub">Paper Company</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="team.html">Our Team</a></li>
+        <li><a href="locations.html">Locations</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="tel:+15705550147" class="btn btn-outline-navy">(570) 555-0147</a>
+        <a href="contact.html" class="btn btn-gold">Request a Quote</a>
+      </div>
+      <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <nav class="breadcrumb"><a href="index.html">Home</a><span class="breadcrumb-sep">›</span><span>Contact</span></nav>
+    <h1>Get in Touch</h1>
+    <p style="color:rgba(255,255,255,.8);max-width:520px;margin-top:12px;font-size:1.05rem;line-height:1.7;">We respond to all enquiries within one business day. For urgent orders, call us directly.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="contact-layout">
+
+      <!-- ── Contact form ── -->
+      <div class="fade-in">
+        <h2 class="form-heading">Send us a message</h2>
+        <p class="form-subheading">Whether you need a quote, want to discuss a standing order, or just have a question about our products — fill in the form below and your message goes directly to the Scranton team.</p>
+
+        <form class="contact-form" novalidate>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="first-name">First name <span class="required">*</span></label>
+              <input class="form-control" type="text" id="first-name" name="first_name" placeholder="e.g. Michael" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="last-name">Last name <span class="required">*</span></label>
+              <input class="form-control" type="text" id="last-name" name="last_name" placeholder="e.g. Scott" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="email">Email address <span class="required">*</span></label>
+              <input class="form-control" type="email" id="email" name="email" placeholder="you@company.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="phone">Phone number</label>
+              <input class="form-control" type="tel" id="phone" name="phone" placeholder="(570) 555-0000">
+            </div>
+            <div class="form-group full">
+              <label class="form-label" for="company">Company name <span class="required">*</span></label>
+              <input class="form-control" type="text" id="company" name="company" placeholder="Your business name" required>
+            </div>
+            <div class="form-group full">
+              <label class="form-label" for="subject">What can we help with? <span class="required">*</span></label>
+              <select class="form-control" id="subject" name="subject" required>
+                <option value="" disabled selected>Select a topic…</option>
+                <option value="quote">Request a quote</option>
+                <option value="order">Place or amend an order</option>
+                <option value="bulk">Bulk / pallet pricing</option>
+                <option value="account">Set up a business account</option>
+                <option value="delivery">Delivery query</option>
+                <option value="product">Product question</option>
+                <option value="complaint">Complaint or return</option>
+                <option value="other">Something else</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label class="form-label" for="message">Message <span class="required">*</span></label>
+              <textarea class="form-control" id="message" name="message" placeholder="Tell us what you need — include product names, quantities, and any deadline if relevant." required></textarea>
+              <span class="form-hint">The more detail you include, the faster we can respond with an accurate quote.</span>
+            </div>
+            <div class="form-group full">
+              <label class="form-label" for="how-did-you-hear">How did you hear about us?</label>
+              <select class="form-control" id="how-did-you-hear" name="referral">
+                <option value="" disabled selected>Select…</option>
+                <option value="existing-client">Existing Dunder Mifflin client</option>
+                <option value="web-search">Web search</option>
+                <option value="referral">Word of mouth</option>
+                <option value="sales-rep">Spoke with a sales rep</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-submit-row">
+            <button type="submit" class="btn btn-gold" style="min-width:160px;">Send Message</button>
+            <p class="form-legal">By submitting this form you agree to be contacted by a Dunder Mifflin sales representative regarding your enquiry. We do not share your information with third parties.</p>
+          </div>
+        </form>
+
+        <div class="form-success">
+          <div class="form-success-icon">✅</div>
+          <h3>Message received!</h3>
+          <p>Thank you for reaching out to the Scranton branch. A member of our team will be in touch within one business day. For anything urgent, call us directly at <strong>(570) 555-0147</strong>.</p>
+        </div>
+      </div>
+
+      <!-- ── Sidebar ── -->
+      <div class="contact-sidebar fade-in">
+
+        <!-- Direct contact details -->
+        <div class="contact-info-card">
+          <h3>Scranton Branch</h3>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">📍</div>
+            <div class="contact-detail-body">
+              <strong>Address</strong>
+              <span>1725 Slough Avenue<br>Scranton, PA 18505</span>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">📞</div>
+            <div class="contact-detail-body">
+              <strong>Main Line</strong>
+              <a href="tel:+15705550147">(570) 555-0147</a>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">📠</div>
+            <div class="contact-detail-body">
+              <strong>Fax</strong>
+              <span>(570) 555-0148</span>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">✉️</div>
+            <div class="contact-detail-body">
+              <strong>Email</strong>
+              <a href="mailto:scranton@dundermifflin.com">scranton@dundermifflin.com</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hours -->
+        <div class="contact-info-card">
+          <h3>Opening Hours</h3>
+          <div class="hours-grid">
+            <span class="hours-day">Monday</span>       <span class="hours-time">8:00 am – 6:00 pm</span>
+            <span class="hours-day">Tuesday</span>      <span class="hours-time">8:00 am – 6:00 pm</span>
+            <span class="hours-day">Wednesday</span>    <span class="hours-time">8:00 am – 6:00 pm</span>
+            <span class="hours-day">Thursday</span>     <span class="hours-time">8:00 am – 6:00 pm</span>
+            <span class="hours-day">Friday</span>       <span class="hours-time">8:00 am – 6:00 pm</span>
+            <span class="hours-day">Saturday</span>     <span class="hours-time">9:00 am – 1:00 pm*</span>
+            <span class="hours-day">Sunday</span>       <span class="hours-time">Closed</span>
+          </div>
+          <p style="font-size:.75rem;color:var(--text-secondary);margin-top:12px;line-height:1.6;">* Warehouse pickup only on Saturdays. No deliveries. Office phones are unmanned; please email for Saturday enquiries.</p>
+          <p style="font-size:.75rem;color:var(--text-secondary);margin-top:8px;line-height:1.6;"><strong style="color:var(--navy-dark);">Same-day dispatch cut-off: 3:00 pm</strong> Monday – Friday.</p>
+        </div>
+
+        <!-- Sales rep card -->
+        <div class="rep-card">
+          <h3>Your Sales Rep</h3>
+          <div class="rep-avatar">JH</div>
+          <div class="rep-name">Jim Halpert</div>
+          <div class="rep-title">Senior Sales Representative</div>
+          <p>Reach out to Jim directly for pricing, account setup, bulk order terms, or any question about your existing account. He picks up the phone.</p>
+          <a class="rep-phone" href="tel:+15705550147">(570) 555-0147 ext. 201</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Map -->
+    <div class="map-strip fade-in">
+      <iframe
+        src="https://www.openstreetmap.org/export/embed.html?bbox=-75.7000%2C41.3900%2C-75.6300%2C41.4300&layer=mapnik&marker=41.4090%2C-75.6624"
+        title="1725 Slough Avenue, Scranton PA"
+        loading="lazy"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+  </div>
+</section>
+
+<!-- Quick contact strip -->
+<section class="section bg-light" style="padding-top:48px;padding-bottom:48px;">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;">
+      <div class="fade-in" style="text-align:center;padding:28px 20px;">
+        <div style="font-size:2rem;margin-bottom:12px;">📞</div>
+        <h3 style="font-size:1rem;font-weight:700;color:var(--navy-dark);margin-bottom:6px;">Call Us</h3>
+        <p style="font-size:.875rem;color:var(--text-secondary);margin-bottom:10px;">Speak to a rep directly during business hours.</p>
+        <a href="tel:+15705550147" style="font-weight:700;color:var(--navy);font-size:.9rem;">(570) 555-0147</a>
+      </div>
+      <div class="fade-in" style="text-align:center;padding:28px 20px;">
+        <div style="font-size:2rem;margin-bottom:12px;">✉️</div>
+        <h3 style="font-size:1rem;font-weight:700;color:var(--navy-dark);margin-bottom:6px;">Email Us</h3>
+        <p style="font-size:.875rem;color:var(--text-secondary);margin-bottom:10px;">We respond to all emails within one business day.</p>
+        <a href="mailto:scranton@dundermifflin.com" style="font-weight:700;color:var(--navy);font-size:.875rem;">scranton@dundermifflin.com</a>
+      </div>
+      <div class="fade-in" style="text-align:center;padding:28px 20px;">
+        <div style="font-size:2rem;margin-bottom:12px;">🌐</div>
+        <h3 style="font-size:1rem;font-weight:700;color:var(--navy-dark);margin-bottom:6px;">Order Online</h3>
+        <p style="font-size:.875rem;color:var(--text-secondary);margin-bottom:10px;">Manage orders and delivery via Dunder Mifflin Infinity.</p>
+        <span style="font-weight:700;color:var(--navy);font-size:.875rem;">infinity.dundermifflin.com</span>
+      </div>
+      <div class="fade-in" style="text-align:center;padding:28px 20px;">
+        <div style="font-size:2rem;margin-bottom:12px;">🚚</div>
+        <h3 style="font-size:1rem;font-weight:700;color:var(--navy-dark);margin-bottom:6px;">Track a Delivery</h3>
+        <p style="font-size:.875rem;color:var(--text-secondary);margin-bottom:10px;">Your order confirmation email includes a tracking link.</p>
+        <span style="font-weight:700;color:var(--navy);font-size:.875rem;">Call ext. 700 for warehouse queries</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo"><span class="logo-dm">DUNDER MIFFLIN</span><span class="logo-sub">Paper Company</span></a>
+        <p class="footer-tagline">Limitless Paper in a Paperless World.<br>Serving northeastern Pennsylvania businesses since 1987.</p>
+      </div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="team.html">Our Team</a></li><li><a href="locations.html">Locations</a></li><li><a href="news.html">News</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Products</h4><ul><li><a href="products.html#copy">Copy Paper</a></li><li><a href="products.html#specialty">Specialty Paper</a></li><li><a href="products.html#envelopes">Envelopes</a></li><li><a href="products.html#bulk">Bulk Orders</a></li><li><a href="contact.html">Custom Quotes</a></li></ul></div>
+      <div class="footer-col"><h4>Scranton Office</h4><p class="footer-contact-item"><strong>1725 Slough Avenue</strong><br>Scranton, PA 18505</p><p class="footer-contact-item">📞 (570) 555-0147</p><p class="footer-contact-item">✉️ scranton@dundermifflin.com</p><p class="footer-contact-item">Mon–Fri: 8:00am – 6:00pm</p></div>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="container"><div class="footer-bottom"><span>© 2025 Dunder Mifflin, Inc. All rights reserved.</span><span>Scranton, PA · Stamford, CT · Nashua, NH · Albany, NY · and 8 more locations</span></div></div>
+</footer>
+<script src="js/main.js"></script>
+</body>
+</html>

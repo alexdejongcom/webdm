@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products — Dunder Mifflin Paper Company</title>
+  <meta name="description" content="Browse Dunder Mifflin's full range of paper products — copy paper, specialty stock, envelopes, and bulk orders. Next-day delivery across northeastern Pennsylvania.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .category-nav {
+      position: sticky;
+      top: 72px;
+      z-index: 90;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0;
+    }
+    .category-nav .container {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .category-nav .container::-webkit-scrollbar { display: none; }
+    .category-btn {
+      flex-shrink: 0;
+      padding: 16px 24px;
+      font-size: .875rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      transition: color .2s, border-color .2s;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+    }
+    .category-btn:hover { color: var(--navy); }
+    .category-btn.active { color: var(--navy); border-bottom-color: var(--gold); }
+
+    .product-section { padding: 64px 0; }
+    .product-section + .product-section { border-top: 1px solid var(--border); }
+    .product-section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .product-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .9rem;
+    }
+    .product-table thead th {
+      text-align: left;
+      padding: 12px 16px;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      background: var(--bg-light);
+      border-bottom: 2px solid var(--border);
+    }
+    .product-table tbody td {
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+      color: var(--text-primary);
+    }
+    .product-table tbody tr:last-child td { border-bottom: none; }
+    .product-table tbody tr:hover td { background: #f8f9fc; }
+    .product-name { font-weight: 600; color: var(--navy); }
+    .product-sku  { font-size: .75rem; color: var(--text-secondary); margin-top: 2px; }
+    .price-cell   { font-weight: 700; color: var(--navy-dark); white-space: nowrap; }
+    .price-cell small { font-weight: 400; color: var(--text-secondary); font-size: .78rem; }
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 99px;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .badge-gold  { background: rgba(200,134,10,.12); color: #7a4f00; }
+    .badge-green { background: rgba(22,163,74,.1);   color: #15803d; }
+    .badge-blue  { background: rgba(37,99,235,.1);   color: #1d4ed8; }
+
+    .callout-box {
+      background: var(--navy);
+      border-radius: 8px;
+      padding: 48px;
+      color: var(--white);
+      margin: 64px 0 0;
+    }
+    .callout-box h2 {
+      font-family: var(--font-head);
+      font-size: 2rem;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    .callout-box p {
+      color: rgba(255,255,255,.75);
+      max-width: 640px;
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+    .callout-reasons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin-bottom: 36px;
+    }
+    .callout-reason h4 {
+      color: var(--gold-light);
+      font-size: .85rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .callout-reason p {
+      color: rgba(255,255,255,.65);
+      font-size: .875rem;
+      margin: 0;
+    }
+
+    .bulk-table tbody td { padding: 20px 16px; }
+    .tier-row-highlight td { background: rgba(200,134,10,.06); }
+
+    @media (max-width: 768px) {
+      .product-table { font-size: .8rem; }
+      .product-table thead th,
+      .product-table tbody td { padding: 10px 10px; }
+      .callout-box { padding: 32px 24px; }
+    }
+    @media (max-width: 480px) {
+      .product-table .hide-mobile { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <nav class="nav-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-dm">DUNDER MIFFLIN</span>
+        <span class="logo-sub">Paper Company</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="team.html">Our Team</a></li>
+        <li><a href="locations.html">Locations</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="tel:+15705550147" class="btn btn-outline-navy">(570) 555-0147</a>
+        <a href="contact.html" class="btn btn-gold">Request a Quote</a>
+      </div>
+      <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <nav class="breadcrumb"><a href="index.html">Home</a><span class="breadcrumb-sep">›</span><span>Products</span></nav>
+    <h1>Our Products</h1>
+    <p style="color:rgba(255,255,255,.8);max-width:560px;margin-top:12px;font-size:1.05rem;line-height:1.7;">Over 500 SKUs in stock at our Scranton warehouse. Orders placed before 3:00 pm ship the same day.</p>
+  </div>
+</section>
+
+<!-- Category Navigation -->
+<nav class="category-nav">
+  <div class="container">
+    <button class="category-btn active" data-target="copy">Copy Paper</button>
+    <button class="category-btn" data-target="specialty">Specialty Paper</button>
+    <button class="category-btn" data-target="envelopes">Envelopes</button>
+    <button class="category-btn" data-target="bulk">Bulk Orders</button>
+  </div>
+</nav>
+
+<!-- ── Copy Paper ──────────────────────────────────────── -->
+<section class="product-section" id="copy">
+  <div class="container">
+    <div class="product-section-header fade-in">
+      <div>
+        <span class="section-label">Category</span>
+        <h2 class="section-title" style="margin-bottom:0">Copy &amp; Multipurpose Paper</h2>
+      </div>
+      <a href="contact.html" class="btn btn-outline-navy">Request Volume Pricing</a>
+    </div>
+    <div class="fade-in" style="overflow-x:auto;">
+      <table class="product-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th class="hide-mobile">Brightness</th>
+            <th class="hide-mobile">Weight</th>
+            <th>Sizes</th>
+            <th>Price / Ream</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="product-name">Multi-Purpose Copy Paper</div>
+              <div class="product-sku">SKU: DM-CP-20-92</div>
+            </td>
+            <td class="hide-mobile">92</td>
+            <td class="hide-mobile">20 lb</td>
+            <td>Letter, Legal</td>
+            <td class="price-cell">$8.99 <small>/ ream</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-name">Premium Laser Paper <span class="badge badge-gold">Best Seller</span></div>
+              <div class="product-sku">SKU: DM-LP-24-98</div>
+            </td>
+            <td class="hide-mobile">98</td>
+            <td class="hide-mobile">24 lb</td>
+            <td>Letter, Legal, Tabloid</td>
+            <td class="price-cell">$12.99 <small>/ ream</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-name">Economy Copy Paper</div>
+              <div class="product-sku">SKU: DM-EC-20-88</div>
+            </td>
+            <td class="hide-mobile">88</td>
+            <td class="hide-mobile">20 lb</td>
+            <td>Letter</td>
+            <td class="price-cell">$6.49 <small>/ ream</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-name">Recycled Copy Paper <span class="badge badge-green">Eco</span></div>
+              <div class="product-sku">SKU: DM-RC-20-87</div>
+            </td>
+            <td class="hide-mobile">87</td>
+            <td class="hide-mobile">20 lb</td>
+            <td>Letter, Legal</td>
+            <td class="price-cell">$9.99 <small>/ ream</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-name">100% Recycled Copy Paper <span class="badge badge-green">Eco+</span></div>
+              <div class="product-sku">SKU: DM-RC100-20-85</div>
+            </td>
+            <td class="hide-mobile">85</td>
+            <td class="hide-mobile">20 lb</td>
+            <td>Letter, Legal</td>
+            <td class="price-cell">$11.49 <small>/ ream</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-name">Heavy-Duty Copy Paper</div>
+              <div class="product-sku">SKU: DM-HD-28-94</div>
+            </td>
+            <td class="hide-mobile">94</td>
+            <td class="hide-mobile">28 lb</td>
+            <td>Letter, Legal, Tabloid</td>
+            <td class="price-cell">$15.49 <small>/ ream</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-name">3-Hole Punched Paper</div>
+              <div class="product-sku">SKU: DM-3H-20-92</div>
+            </td>
+            <td class="hide-mobile">92</td>
+            <td class="hide-mobile">20 lb</td>
+            <td>Letter</td>
+            <td class="price-cell">$9.79 <small>/ ream</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-name">Colored Copy Paper — Pastel Assorted</div>
+              <div class="product-sku">SKU: DM-CPA-20</div>
+            </td>
+            <td class="hide-mobile">—</td>
+            <td class="hide-mobile">20 lb</td>
+            <td>Letter</td>
+            <td class="price-cell">$10.99 <small>/ ream</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── Specialty Paper ─────────────────────────────────── -->
+<section class="product-section" id="specialty">
+  <div class="container">
+    <div class="product-section-header fade-in">
+      <div>
+        <span class="section-label">Category</span>
+        <h2 class="section-title" style="margin-bottom:0">Specialty &amp; Presentation Paper</h2>
+      </div>
+      <a href="contact.html" class="btn btn-outline-navy">Request a Sample Pack</a>
+    </div>
+    <div class="fade-in" style="overflow-x:auto;">
+      <table class="product-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th class="hide-mobile">Brightness</th>
+            <th class="hide-mobile">Weight</th>
+            <th>Sizes</th>
+            <th>Price / Ream</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="product-name">Premium Cardstock <span class="badge badge-gold">Popular</span></div>
+              <div class="product-sku">SKU: DM-CS-67-90</div>
+            </td>
+            <td class="hide-mobile">90</td>
+            <td class="hide-mobile">67 lb</td>
+            <td>Letter, Legal</td>
+            <td class="price-cell">$14.99 <small>/ ream</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-name">Photo-Quality Inkjet Paper</div>
+              <div class="product-sku">SKU: DM-PQ-32-98</div>
+            </td>
+            <td class="hide-mobile">98</td>
+            <td class="hide-mobile">32 lb</td>
+            <td>Letter, 4×6, 5×7</td>
+            <td class="price-cell">$18.49 <small>/ ream</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-name">Gloss Brochure Paper</div>
+              <div class="product-sku">SKU: DM-GB-80-96</div>
+            </td>
+            <td class="hide-mobile">96</td>
+            <td class="hide-mobile">80 lb</td>
+            <td>Letter, Tabloid</td>
+            <td class="price-cell">$21.99 <small>/ ream</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-name">Matte Presentation Paper</div>
+              <div class="product-sku">SKU: DM-MP-60-95</div>
+            </td>
+            <td class="hide-mobile">95</td>
+            <td class="hide-mobile">60 lb</td>
+            <td>Letter, Tabloid</td>
+            <td class="price-cell">$19.49 <small>/ ream</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-name">Linen-Finish Résumé Paper</div>
+              <div class="product-sku">SKU: DM-LR-24-96</div>
+            </td>
+            <td class="hide-mobile">96</td>
+            <td class="hide-mobile">24 lb</td>
+            <td>Letter</td>
+            <td class="price-cell">$16.99 <small>/ ream</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-name">Certificate &amp; Award Paper <span class="badge badge-blue">New</span></div>
+              <div class="product-sku">SKU: DM-CA-24-97</div>
+            </td>
+            <td class="hide-mobile">97</td>
+            <td class="hide-mobile">24 lb</td>
+            <td>Letter</td>
+            <td class="price-cell">$17.49 <small>/ ream</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-name">Vellum Translucent Paper</div>
+              <div class="product-sku">SKU: DM-VT-17</div>
+            </td>
+            <td class="hide-mobile">—</td>
+            <td class="hide-mobile">17 lb</td>
+            <td>Letter, Tabloid</td>
+            <td class="price-cell">$22.99 <small>/ ream</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-name">Watercolour &amp; Art Paper</div>
+              <div class="product-sku">SKU: DM-WA-90</div>
+            </td>
+            <td class="hide-mobile">—</td>
+            <td class="hide-mobile">90 lb</td>
+            <td>Letter, Tabloid, A3</td>
+            <td class="price-cell">$29.99 <small>/ ream</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── Envelopes ───────────────────────────────────────── -->
+<section class="product-section" id="envelopes">
+  <div class="container">
+    <div class="product-section-header fade-in">
+      <div>
+        <span class="section-label">Category</span>
+        <h2 class="section-title" style="margin-bottom:0">Envelopes &amp; Mailers</h2>
+      </div>
+      <a href="contact.html" class="btn btn-outline-navy">Custom Print Enquiry</a>
+    </div>
+    <div class="fade-in" style="overflow-x:auto;">
+      <table class="product-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th class="hide-mobile">Size</th>
+            <th class="hide-mobile">Seal Type</th>
+            <th>Qty / Box</th>
+            <th>Price / Box</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="product-name">Standard #10 Business Envelope <span class="badge badge-gold">Best Seller</span></div>
+              <div class="product-sku">SKU: DM-ENV-10-WH</div>
+            </td>
+            <td class="hide-mobile">#10 (4⅛ × 9½)</td>
+            <td class="hide-mobile">Gummed</td>
+            <td>500</td>
+            <td class="price-cell">$12.99 <small>/ box</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-name">Self-Sealing #10 Envelope</div>
+              <div class="product-sku">SKU: DM-ENV-10-SS</div>
+            </td>
+            <td class="hide-mobile">#10 (4⅛ × 9½)</td>
+            <td class="hide-mobile">Self-seal</td>
+            <td>500</td>
+            <td class="price-cell">$16.49 <small>/ box</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-name">Window #10 Envelope</div>
+              <div class="product-sku">SKU: DM-ENV-10-WIN</div>
+            </td>
+            <td class="hide-mobile">#10 (4⅛ × 9½)</td>
+            <td class="hide-mobile">Gummed</td>
+            <td>500</td>
+            <td class="price-cell">$14.99 <small>/ box</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-name">Catalog Envelope 9 × 12</div>
+              <div class="product-sku">SKU: DM-ENV-CAT-912</div>
+            </td>
+            <td class="hide-mobile">9 × 12</td>
+            <td class="hide-mobile">Clasp &amp; gummed</td>
+            <td>100</td>
+            <td class="price-cell">$18.99 <small>/ box</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-name">Catalog Envelope 10 × 13</div>
+              <div class="product-sku">SKU: DM-ENV-CAT-1013</div>
+            </td>
+            <td class="hide-mobile">10 × 13</td>
+            <td class="hide-mobile">Clasp &amp; gummed</td>
+            <td>100</td>
+            <td class="price-cell">$21.49 <small>/ box</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-name">Padded Bubble Mailer — Small</div>
+              <div class="product-sku">SKU: DM-BM-SM</div>
+            </td>
+            <td class="hide-mobile">6 × 9</td>
+            <td class="hide-mobile">Self-seal</td>
+            <td>50</td>
+            <td class="price-cell">$15.99 <small>/ box</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-name">Padded Bubble Mailer — Large</div>
+              <div class="product-sku">SKU: DM-BM-LG</div>
+            </td>
+            <td class="hide-mobile">10½ × 15</td>
+            <td class="hide-mobile">Self-seal</td>
+            <td>25</td>
+            <td class="price-cell">$19.49 <small>/ box</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="product-name">Premium Invitation Envelope A2 <span class="badge badge-blue">New</span></div>
+              <div class="product-sku">SKU: DM-ENV-A2-IVY</div>
+            </td>
+            <td class="hide-mobile">A2 (4⅜ × 5¾)</td>
+            <td class="hide-mobile">Gummed</td>
+            <td>250</td>
+            <td class="price-cell">$22.99 <small>/ box</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── Bulk Orders ─────────────────────────────────────── -->
+<section class="product-section" id="bulk">
+  <div class="container">
+    <div class="product-section-header fade-in">
+      <div>
+        <span class="section-label">Category</span>
+        <h2 class="section-title" style="margin-bottom:0">Bulk &amp; Case Pricing</h2>
+      </div>
+      <a href="contact.html" class="btn btn-gold">Get a Custom Quote</a>
+    </div>
+    <p class="fade-in" style="color:var(--text-secondary);margin-bottom:32px;max-width:640px;">All copy and laser paper products are available at tiered case pricing. The more you buy, the more you save — and we deliver free on orders of 5 cases or more to addresses within 60 miles of Scranton.</p>
+    <div class="fade-in" style="overflow-x:auto;">
+      <table class="product-table bulk-table">
+        <thead>
+          <tr>
+            <th>Tier</th>
+            <th>Quantity (Reams)</th>
+            <th>Discount off List</th>
+            <th>Sample Price — Multi-Purpose 20 lb</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Single Ream</strong></td>
+            <td>1</td>
+            <td>—</td>
+            <td class="price-cell">$8.99 <small>/ ream</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr>
+            <td><strong>Half Case</strong></td>
+            <td>5</td>
+            <td>5%</td>
+            <td class="price-cell">$8.54 <small>/ ream</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr class="tier-row-highlight">
+            <td><strong>Full Case</strong></td>
+            <td>10</td>
+            <td>10%</td>
+            <td class="price-cell">$8.09 <small>/ ream</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr class="tier-row-highlight">
+            <td><strong>3-Case Pack <span class="badge badge-gold">Popular</span></strong></td>
+            <td>30</td>
+            <td>15%</td>
+            <td class="price-cell">$7.64 <small>/ ream</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr>
+            <td><strong>Pallet (Small)</strong></td>
+            <td>100</td>
+            <td>20%</td>
+            <td class="price-cell">$7.19 <small>/ ream</small></td>
+            <td><a href="contact.html" class="btn btn-navy" style="padding:8px 16px;font-size:.8rem;">Order</a></td>
+          </tr>
+          <tr>
+            <td><strong>Pallet (Full)</strong></td>
+            <td>240+</td>
+            <td>Up to 28%</td>
+            <td class="price-cell"><a href="contact.html" style="color:var(--gold);">Call for pricing</a></td>
+            <td><a href="contact.html" class="btn btn-gold" style="padding:8px 16px;font-size:.8rem;">Quote</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Why Buy Direct callout -->
+    <div class="callout-box fade-in">
+      <h2>Why buy direct from Dunder Mifflin?</h2>
+      <p>We are not a middleman. Every order ships from our Scranton warehouse, stocked and managed by our own team. That means you get real-time availability, same-day fulfilment on in-stock items, and a named account rep who picks up the phone.</p>
+      <div class="callout-reasons">
+        <div class="callout-reason">
+          <h4>No Minimum Order</h4>
+          <p>Order a single ream or a full pallet — we treat every order with the same care and urgency.</p>
+        </div>
+        <div class="callout-reason">
+          <h4>Free Delivery at 5+ Cases</h4>
+          <p>Orders of five cases or more ship free to any address within 60 miles of Scranton, PA.</p>
+        </div>
+        <div class="callout-reason">
+          <h4>24-Hour SLA</h4>
+          <p>Orders placed before 3:00 pm ship the same day. Next-day delivery standard across NE Pennsylvania.</p>
+        </div>
+        <div class="callout-reason">
+          <h4>Flexible Billing</h4>
+          <p>Net-30 accounts available for qualified businesses. Ask your rep for details.</p>
+        </div>
+      </div>
+      <a href="contact.html" class="btn btn-gold">Talk to a Sales Rep</a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo"><span class="logo-dm">DUNDER MIFFLIN</span><span class="logo-sub">Paper Company</span></a>
+        <p class="footer-tagline">Limitless Paper in a Paperless World.<br>Serving northeastern Pennsylvania businesses since 1987.</p>
+      </div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="team.html">Our Team</a></li><li><a href="locations.html">Locations</a></li><li><a href="news.html">News</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Products</h4><ul><li><a href="products.html#copy">Copy Paper</a></li><li><a href="products.html#specialty">Specialty Paper</a></li><li><a href="products.html#envelopes">Envelopes</a></li><li><a href="products.html#bulk">Bulk Orders</a></li><li><a href="contact.html">Custom Quotes</a></li></ul></div>
+      <div class="footer-col"><h4>Scranton Office</h4><p class="footer-contact-item"><strong>1725 Slough Avenue</strong><br>Scranton, PA 18505</p><p class="footer-contact-item">📞 (570) 555-0147</p><p class="footer-contact-item">✉️ scranton@dundermifflin.com</p><p class="footer-contact-item">Mon–Fri: 8:00am – 6:00pm</p></div>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="container"><div class="footer-bottom"><span>© 2025 Dunder Mifflin, Inc. All rights reserved.</span><span>Scranton, PA · Stamford, CT · Nashua, NH · Albany, NY · and 8 more locations</span></div></div>
+</footer>
+<script src="js/main.js"></script>
+</body>
+</html>
