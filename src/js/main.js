@@ -259,6 +259,33 @@ document.addEventListener('DOMContentLoaded', () => {
     twssTimer = setTimeout(() => twssPopup.classList.remove('visible'), 3200);
   });
 
+  // ── "It is your birthday." banner (1-in-8 chance) ────────────
+  if (Math.random() < 0.125) {
+    const bdayStyles = document.createElement('style');
+    bdayStyles.textContent = `
+      #bday-banner {
+        position: fixed; top: 0; left: 0; right: 0; z-index: 99998;
+        background: #1b3a6b; color: rgba(255,255,255,.9);
+        text-align: center; padding: 9px 40px 9px 16px;
+        font-size: .78rem; font-weight: 500; letter-spacing: .18em;
+        text-transform: uppercase; font-family: 'Inter', sans-serif;
+        box-shadow: 0 2px 8px rgba(0,0,0,.2);
+      }
+      #bday-banner-close {
+        position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+        background: none; border: none; color: rgba(255,255,255,.5);
+        font-size: 1rem; cursor: pointer; line-height: 1;
+      }
+      #bday-banner-close:hover { color: #fff; }
+    `;
+    document.head.appendChild(bdayStyles);
+    const bday = document.createElement('div');
+    bday.id = 'bday-banner';
+    bday.innerHTML = 'It is your birthday. &nbsp;<button id="bday-banner-close" aria-label="Close">✕</button>';
+    document.body.prepend(bday);
+    document.getElementById('bday-banner-close').addEventListener('click', () => bday.remove());
+  }
+
   // ── Paper plane animation on load ─────────────────────────────
   const planeStyles = document.createElement('style');
   planeStyles.textContent = `
